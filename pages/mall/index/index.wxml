@@ -3,16 +3,33 @@
   <!-- 统计栏 -->
   <view class="stats-bar">
     <view class="stat-item">
-      <text class="stat-value">{{totalCount}}</text>
-      <text class="stat-label">商品总数</text>
+      <view class="stat-icon-wrapper">
+        <text class="stat-icon">📦</text>
+      </view>
+      <view class="stat-text">
+        <text class="stat-value">{{totalCount}}</text>
+        <text class="stat-label">全部商品</text>
+      </view>
     </view>
+    <view class="stat-divider"></view>
     <view class="stat-item">
-      <text class="stat-value on-sale">{{onSaleCount}}</text>
-      <text class="stat-label">在售</text>
+      <view class="stat-icon-wrapper on-sale-bg">
+        <text class="stat-icon">✅</text>
+      </view>
+      <view class="stat-text">
+        <text class="stat-value on-sale">{{onSaleCount}}</text>
+        <text class="stat-label">在售中</text>
+      </view>
     </view>
+    <view class="stat-divider"></view>
     <view class="stat-item">
-      <text class="stat-value off-sale">{{offSaleCount}}</text>
-      <text class="stat-label">已下架</text>
+      <view class="stat-icon-wrapper off-sale-bg">
+        <text class="stat-icon">⏸️</text>
+      </view>
+      <view class="stat-text">
+        <text class="stat-value off-sale">{{offSaleCount}}</text>
+        <text class="stat-label">已下架</text>
+      </view>
     </view>
   </view>
 

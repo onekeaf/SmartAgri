@@ -41,9 +41,9 @@ Page({
           images: product.images || [],
           productName: product.product_name || '',
           categoryIndex: this.data.categories.indexOf(product.category),
-          price: product.price || '',
+          price: String(product.price || ''),
           specification: product.specification || '',
-          stock: product.stock || '',
+          stock: String(product.stock || ''),
           origin: product.origin || '',
           description: product.description || '',
           descriptionLength: (product.description || '').length
@@ -133,7 +133,8 @@ Page({
       return false;
     }
 
-    if (!this.data.price.trim()) {
+    const priceStr = String(this.data.price).trim();
+    if (!priceStr) {
       wx.showToast({
         title: '请输入商品价格',
         icon: 'none'
@@ -141,7 +142,7 @@ Page({
       return false;
     }
 
-    const priceNum = parseFloat(this.data.price);
+    const priceNum = parseFloat(priceStr);
     if (isNaN(priceNum) || priceNum <= 0) {
       wx.showToast({
         title: '请输入有效的价格',
@@ -150,7 +151,8 @@ Page({
       return false;
     }
 
-    if (!this.data.stock.trim()) {
+    const stockStr = String(this.data.stock).trim();
+    if (!stockStr) {
       wx.showToast({
         title: '请输入库存数量',
         icon: 'none'
@@ -158,7 +160,7 @@ Page({
       return false;
     }
 
-    const stockNum = parseInt(this.data.stock);
+    const stockNum = parseInt(stockStr);
     if (isNaN(stockNum) || stockNum < 0) {
       wx.showToast({
         title: '请输入有效的库存数量',
@@ -167,7 +169,7 @@ Page({
       return false;
     }
 
-    if (!this.data.origin.trim()) {
+    if (!String(this.data.origin).trim()) {
       wx.showToast({
         title: '请输入产地信息',
         icon: 'none'
@@ -175,7 +177,7 @@ Page({
       return false;
     }
 
-    if (!this.data.description.trim()) {
+    if (!String(this.data.description).trim()) {
       wx.showToast({
         title: '请输入商品描述',
         icon: 'none'
@@ -196,15 +198,15 @@ Page({
       const now = new Date().getTime();
 
       const productData = {
-        product_name: this.data.productName.trim(),
+        product_name: String(this.data.productName).trim(),
         category: this.data.categories[this.data.categoryIndex],
         price: parseFloat(this.data.price),
         original_price: parseFloat(this.data.price),
         images: this.data.images,
-        specification: this.data.specification.trim(),
+        specification: String(this.data.specification).trim(),
         stock: parseInt(this.data.stock),
-        origin: this.data.origin.trim(),
-        description: this.data.description.trim(),
+        origin: String(this.data.origin).trim(),
+        description: String(this.data.description).trim(),
         updated_at: now
       };
 
