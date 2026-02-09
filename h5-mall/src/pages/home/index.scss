@@ -28,11 +28,11 @@
 :deep(.van-tab) {
   font-size: 14px;
   color: #666;
-  
-  &--active {
-    color: #4CAF50;
-    font-weight: 500;
-  }
+}
+
+:deep(.van-tab--active) {
+  color: #4CAF50;
+  font-weight: 500;
 }
 
 :deep(.van-tabs__line) {
