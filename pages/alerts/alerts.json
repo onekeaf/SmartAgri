@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "提醒历史",
+  "navigationBarBackgroundColor": "#4CAF50",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
+  "usingComponents": {}
+} 

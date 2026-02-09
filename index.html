@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧农业功能模块图</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', "Microsoft YaHei", sans-serif;
+        }
+        
+        body {
+            background: #f0f5f0;
+            background-image: linear-gradient(to bottom right, rgba(156, 204, 101, 0.1), rgba(38, 125, 66, 0.1));
+            padding: 30px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            border: none;
+            padding: 25px;
+            border-radius: 15px;
+            background-color: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #5cb85c, #4cae4c, #2e8b57);
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #2e8b57;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(to right, #5cb85c, #4cae4c, #2e8b57);
+        }
+        
+        .user-roles {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 20px;
+        }
+        
+        .user-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: #2e8b57;
+            font-weight: bold;
+        }
+        
+        .user-types {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .role {
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            flex: 1;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .role:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .role h3 {
+            color: #2e8b57;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        
+        .modules-container {
+            display: flex;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .module-group {
+            flex: 1;
+            min-width: 250px;
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .module-group:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .module-title {
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #5cb85c;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(92, 184, 92, 0.2);
+        }
+        
+        .sub-modules-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sub-module {
+            margin-bottom: 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sub-module-title {
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+            background-color: #e9f5e9;
+            color: #2e8b57;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 45px;
+        }
+        
+        .sub-module-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #4cae4c;
+        }
+        
+        .sub-module-content {
+            border: none;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            line-height: 1.6;
+            color: #555;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-height: 80px;
+            height: 80px;
+        }
+        
+        .sub-module-content:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #f8fff8;
+        }
+        
+        .ai-module {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .ai-sub-module {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            padding-top: 20px;
+            gap: 12px;
+            position: relative;
+        }
+        
+        .tech-stack::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #ccc, transparent);
+        }
+        
+        .tech-item {
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            text-align: center;
+            background-color: #f0f5f0;
+            color: #2e8b57;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .tech-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: #e8f3e8;
+        }
+        
+        .tech-base {
+            background: linear-gradient(to right, #5cb85c, #4cae4c);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(92, 184, 92, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .modules-container {
+                flex-direction: column;
+            }
+            
+            .user-types {
+                flex-direction: column;
+            }
+            
+            .role, .module-group {
+                margin-bottom: 20px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+        }
+        
+        /* 图标 */
+        .icon-container {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background-color: rgba(92, 184, 92, 0.1);
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .icon-weather::before {
+            content: '☀️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-sensor::before {
+            content: '🌱';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-alert::before {
+            content: '⚠️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-control::before {
+            content: '🎮';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-record::before {
+            content: '📊';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-ai::before {
+            content: '🤖';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-chat::before {
+            content: '💬';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-button::before {
+            content: '🔘';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-user::before {
+            content: '👤';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-register::before {
+            content: '📝';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-login::before {
+            content: '🔑';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-info::before {
+            content: '📋';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-edit::before {
+            content: '✏️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .icon-logout::before {
+            content: '🚪';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+        }
+        
+        .empty-content {
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">智慧农业功能模块图</div>
+        
+        <!-- 用户角色 -->
+        <div class="user-roles">
+            <div class="user-title">用户肖像</div>
+            <div class="user-types">
+                <div class="role">
+                    <h3>农场管理员：拥有查看传感器数据和控制设备，指令AI助手等权限</h3>
+                </div>
+                <div class="role">
+                    <h3>农场游客：拥有查看传感器数据和设备状态，使用AI助手问答的权限</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 功能模块 -->
+        <div class="modules-container">
+            <!-- 农场数据展示模块 -->
+            <div class="module-group">
+                <div class="module-title">农场数据展示模块</div>
+                
+                <div class="sub-modules-container">
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-weather"></span>1.1实时天气数据
+                        </div>
+                        <div class="sub-module-content">
+                            天气状况实时更新，刮风下雨及时知晓
+                        </div>
+                    </div>
+                    
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-sensor"></span>1.2实时传感器数据
+                        </div>
+                        <div class="sub-module-content">
+                            随时了解土壤、空气、光照数据，及时决策
+                        </div>
+                    </div>
+                    
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-alert"></span>1.3实时智能提醒
+                        </div>
+                        <div class="sub-module-content">
+                            数据异常智能提醒，确保农作物生长环境安全
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 农场设备控制模块 -->
+            <div class="module-group">
+                <div class="module-title">农场设备控制模块</div>
+                
+                <div class="sub-modules-container">
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-control"></span>2.1农业设备控制
+                        </div>
+                        <div class="sub-module-content">
+                            控制面板清晰可见，一键控制各类设备（喷灌、温控、通风等）
+                        </div>
+                    </div>
+                    
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-record"></span>2.2设备控制记录
+                        </div>
+                        <div class="sub-module-content">
+                            筛选查看各类设备运行状态，出现异常及时知晓
+                        </div>
+                    </div>
+                    
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-control"></span>2.3设备智能调节
+                        </div>
+                        <div class="sub-module-content">
+                            基于环境数据自动调节设备参数，优化作物生长条件
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI智慧农业助手模块 -->
+            <div class="module-group">
+                <div class="module-title">AI智慧农业助手模块</div>
+                
+                <div class="sub-modules-container">
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-ai"></span>3.1超级智慧农业助手
+                        </div>
+                        <div class="sub-module-content">
+                            超级农场智慧管家，天气、设备、传感数据全方位实时监督，记忆存储，自主学习，聊天对话、分析报告、智能决策，0监督托管
+                        </div>
+                    </div>
+                    
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-chat"></span>3.2智能对话
+                        </div>
+                        <div class="sub-module-content">
+                            常规农业知识问答，语音控制设备，分析真实农场数据
+                        </div>
+                    </div>
+                    
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-button"></span>3.3一键控制
+                        </div>
+                        <div class="sub-module-content">
+                            读取数据导常信息，一键询问AI助手，自动控制设备
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 用户模块 -->
+            <div class="module-group">
+                <div class="module-title">用户模块</div>
+                
+                <div class="sub-modules-container">
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-register"></span>用户注册
+                        </div>
+                        <div class="sub-module-content">
+                            简单高效的注册流程，快速创建农场管理账户
+                        </div>
+                    </div>
+                    
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-login"></span>用户登录
+                        </div>
+                        <div class="sub-module-content">
+                            安全便捷的身份验证，支持多种登录方式
+                        </div>
+                    </div>
+                    
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-info"></span>信息展示
+                        </div>
+                        <div class="sub-module-content">
+                            展示用户个人信息及权限设置，清晰直观
+                        </div>
+                    </div>
+                    
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-edit"></span>信息修改
+                        </div>
+                        <div class="sub-module-content">
+                            灵活调整个人信息和账户设置，操作简单
+                        </div>
+                    </div>
+                    
+                    <div class="sub-module">
+                        <div class="sub-module-title">
+                            <span class="icon-container icon-logout"></span>退出系统
+                        </div>
+                        <div class="sub-module-content">
+                            安全退出系统，保护账户数据安全
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 技术栈 -->
+        <div class="tech-stack">
+            <div class="tech-item tech-base">技术基础</div>
+            <div class="tech-item">微信小程序</div>
+            <div class="tech-item">Python</div>
+            <div class="tech-item">LangChain</div>
+            <div class="tech-item">MQTT</div>
+            <div class="tech-item">Fast API</div>
+            <div class="tech-item">鸿蒙硬件</div>
+        </div>
+    </div>
+</body>
+</html> 

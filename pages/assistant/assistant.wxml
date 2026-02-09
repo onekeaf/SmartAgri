@@ -1,0 +1,116 @@
+<view class="page-container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="header-title">智慧农业助手</view>
+    <view class="header-subtitle">随时为您提供专业的农业建议</view>
+    <!-- 连接状态指示器 -->
+    <view class="connection-status {{wsConnected ? 'connected' : 'disconnected'}}">
+      <view class="status-dot"></view>
+      <text class="status-text">{{wsConnected ? '已连接' : '未连接'}}</text>
+    </view>
+  </view>
+
+  <!-- 聊天区域 -->
+  <scroll-view class="chat-container" scroll-y scroll-into-view="{{scrollToMessage}}" scroll-with-animation>
+    <!-- 欢迎消息 -->
+    <view class="message-item assistant" id="welcome-msg">
+      <view class="avatar">
+        <view class="avatar-icon">🤖</view>
+      </view>
+      <view class="message-content">
+        <view class="message-text">您好！我是您的智慧农业助手。我可以回答您关于：
+          <view class="suggestion-list">
+            <view>• 土壤和空气数据分析</view>
+            <view>• 作物种植和管理建议</view>
+            <view>• 病虫害防治方法</view>
+            <view>• 智能设备使用指导</view>
+          </view>
+          请问有什么可以帮您的？
+        </view>
+      </view>
+    </view>
+
+    <!-- 聊天记录 -->
+    <view wx:for="{{messageList}}" wx:key="id" class="message-item {{item.type}}" id="msg-{{item.id}}">
+      <view class="avatar">
+        <view class="avatar-icon">{{item.type === 'user' ? '👤' : '🤖'}}</view>
+      </view>
+      <view class="message-content">
+        <view class="message-text">{{item.content}}</view>
+        <view class="message-time">{{item.time}}</view>
+      </view>
+    </view>
+    
+    <!-- 消息处理动画提示区域 (放在聊天记录内部，始终在最底部) -->
+    <view class="processing-indicator" wx:if="{{showProcessingIndicator}}">
+      <text class="processing-text">{{processingTexts[currentProcessingTextIndex]}}</text>
+    </view>
+  </scroll-view>
+  
+  <!-- 底部输入区域 -->
+  <view class="input-container">
+    <view class="query-suggestions" wx:if="{{suggestions.length > 0}}">
+      <scroll-view scroll-x class="suggestion-scroll">
+        <view 
+          wx:for="{{suggestions}}" 
+          wx:key="index" 
+          class="query-tag" 
+          bindtap="tapSuggestion" 
+          data-query="{{item}}">
+          {{item}}
+        </view>
+      </scroll-view>
+    </view>
+    
+    <view class="input-box">
+      <!-- 切换语音/键盘按钮 -->
+      <view class="input-mode-toggle" bindtap="toggleInputMode">
+        <image wx:if="{{!isVoiceMode}}" class="input-icon" src="/assets/icons/voice.svg" mode="aspectFit"></image>
+        <image wx:else class="input-icon" src="/assets/icons/keyboard.svg" mode="aspectFit"></image>
+      </view>
+
+      <!-- 文本输入框（文字模式） -->
+      <input 
+        wx:if="{{!isVoiceMode}}"
+        class="input-field" 
+        placeholder="输入您的问题..." 
+        value="{{inputValue}}" 
+        bindinput="onInputChange" 
+        confirm-type="send" 
+        bindconfirm="{{loading || streamingMessageId !== null ? 'stopGeneration' : 'sendMessage'}}"
+        disabled="{{!wsConnected && loading}}"
+      />
+
+      <!-- 语音输入按钮（语音模式） -->
+      <view 
+        wx:else 
+        class="voice-button {{isRecording ? 'recording' : ''}}"
+        bindtouchstart="startRecording"
+        bindtouchend="stopRecording"
+        bindtouchmove="moveRecording"
+      >
+        <text>{{isRecording ? '松开发送' : '按住说话'}}</text>
+        <!-- 录音动效 -->
+        <view wx:if="{{isRecording}}" class="recording-animation">
+          <view class="recording-wave"></view>
+          <view class="recording-wave"></view>
+          <view class="recording-wave"></view>
+        </view>
+      </view>
+
+      <!-- 发送/停止生成按钮 -->
+      <view 
+        wx:if="{{!isVoiceMode}}"
+        class="{{loading || streamingMessageId !== null ? 'stop-button' : 'send-button'}} {{inputValue && (wsConnected || !loading) ? 'active' : 'disabled'}}" 
+        bindtap="{{loading || streamingMessageId !== null ? 'stopGeneration' : 'sendMessage'}}"
+      >
+        {{loading || streamingMessageId !== null ? '停止' : '发送'}}
+      </view>
+    </view>
+
+    <!-- 取消录音提示 -->
+    <view class="cancel-recording-tip {{showCancelTip ? 'visible' : ''}}" wx:if="{{isRecording}}">
+      <text>↑ 上滑取消</text>
+    </view>
+  </view>
+</view> 

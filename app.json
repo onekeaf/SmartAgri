@@ -1,0 +1,59 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/profile/profile",
+    "pages/assistant/assistant",
+    "pages/edit-profile/edit-profile",
+    "pages/change-password/change-password",
+    "pages/device-history/device-history",
+    "pages/data-details/data-details",
+    "pages/alerts/alerts",
+    "pages/device/device",
+    "pages/ssaa/ssaa"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "智慧农业",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#4CAF50",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/device/device",
+        "text": "设备管理",
+        "iconPath": "assets/icons/device.png",
+        "selectedIconPath": "assets/icons/device-active.png"
+      },
+      {
+        "pagePath": "pages/assistant/assistant",
+        "text": "AI助手",
+        "iconPath": "assets/icons/assistant.png",
+        "selectedIconPath": "assets/icons/assistant-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/icons/profile.png",
+        "selectedIconPath": "assets/icons/profile-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

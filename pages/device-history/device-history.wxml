@@ -1,0 +1,258 @@
+<!--device-history.wxml-->
+<view class="page-container">
+  <!-- 导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="navigateBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-title">{{deviceName}}历史记录</view>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- 历史记录列表 -->
+  <scroll-view class="history-list" scroll-y enable-back-to-top enable-flex>
+    <block wx:if="{{historyList.length > 0}}">
+      <!-- 三色灯历史记录项 (traffic-light 旧接口) -->
+      <block wx:if="{{deviceType === 'traffic-light'}}">
+        <view class="history-item" wx:for="{{historyList}}" wx:key="status_id">
+          <view class="history-header">
+            <view class="device-name">三色灯控制器</view>
+            <view class="operation-time">{{item.operation_time}}</view>
+          </view>
+          <view class="history-content">
+            <!-- 设备总状态 -->
+            <view class="status-item">
+              <view class="status-label">总状态</view>
+              <view class="status-value {{item.power_status === 1 ? 'active' : ''}}">
+                {{item.power_status === 1 ? '开启' : '关闭'}}
+              </view>
+            </view>
+            
+            <!-- 红灯状态 -->
+            <view class="status-item">
+              <view class="status-label">红灯</view>
+              <view class="status-value red {{item.red === 1 ? 'active' : ''}}">
+                {{item.red === 1 ? '开启' : '关闭'}}
+              </view>
+            </view>
+            
+            <!-- 黄灯状态 -->
+            <view class="status-item">
+              <view class="status-label">黄灯</view>
+              <view class="status-value yellow {{item.yellow === 1 ? 'active' : ''}}">
+                {{item.yellow === 1 ? '开启' : '关闭'}}
+              </view>
+            </view>
+            
+            <!-- 绿灯状态 -->
+            <view class="status-item">
+              <view class="status-label">绿灯</view>
+              <view class="status-value green {{item.green === 1 ? 'active' : ''}}">
+                {{item.green === 1 ? '开启' : '关闭'}}
+              </view>
+            </view>
+            
+            <!-- 操作类型 -->
+            <view class="status-item operation-type">
+              <view class="status-label">操作类型</view>
+              <view class="status-value">
+                {{getOperationType(item)}}
+              </view>
+            </view>
+          </view>
+          <view class="operator-info">
+            <view class="operator-label">操作人:</view>
+            <view class="operator-name">{{item.operation_user.username || '未知'}}</view>
+            <view class="operation-detail">
+              <view class="operation-detail-text" bindtap="toggleDetail" data-index="{{index}}">
+                {{item.showDetail ? '收起详情' : '查看详情'}}
+              </view>
+            </view>
+          </view>
+          
+          <!-- 详细信息 -->
+          <view class="detail-section" wx:if="{{item.showDetail}}">
+            <view class="detail-item">
+              <view class="detail-label">操作ID:</view>
+              <view class="detail-value">{{item.status_id}}</view>
+            </view>
+            <view class="detail-item">
+              <view class="detail-label">设备类型:</view>
+              <view class="detail-value">三色灯控制器</view>
+            </view>
+            <view class="detail-item">
+              <view class="detail-label">操作时间:</view>
+              <view class="detail-value">{{item.operation_time}}</view>
+            </view>
+            <view class="detail-item">
+              <view class="detail-label">操作用户ID:</view>
+              <view class="detail-value">{{item.operation_user.user_id}}</view>
+            </view>
+          </view>
+        </view>
+      </block>
+      
+      <!-- 三色灯历史记录项 (light 新接口) -->
+      <block wx:elif="{{deviceType === 'light'}}">
+        <view class="history-item" wx:for="{{historyList}}" wx:key="status_id">
+          <view class="history-header">
+            <view class="device-name">光照设备</view>
+            <view class="operation-time">{{item.operation_time}}</view>
+          </view>
+          <view class="history-content">
+            <!-- 光照强度 -->
+            <view class="status-item" wx:if="{{item.intensity !== undefined}}">
+              <view class="status-label">光照强度</view>
+              <view class="status-value">
+                {{item.intensity}} lux
+              </view>
+            </view>
+            
+            <!-- 红灯状态 -->
+            <view class="status-item">
+              <view class="status-label">红灯</view>
+              <view class="status-value red {{item.l0 === 1 ? 'active' : ''}}">
+                {{item.l0 === 1 ? '开启' : '关闭'}}
+              </view>
+            </view>
+            
+            <!-- 黄灯状态 -->
+            <view class="status-item">
+              <view class="status-label">黄灯</view>
+              <view class="status-value yellow {{item.l2 === 1 ? 'active' : ''}}">
+                {{item.l2 === 1 ? '开启' : '关闭'}}
+              </view>
+            </view>
+            
+            <!-- 绿灯状态 -->
+            <view class="status-item">
+              <view class="status-label">绿灯</view>
+              <view class="status-value green {{item.l1 === 1 ? 'active' : ''}}">
+                {{item.l1 === 1 ? '开启' : '关闭'}}
+              </view>
+            </view>
+            
+            <!-- 操作类型 -->
+            <view class="status-item operation-type">
+              <view class="status-label">操作类型</view>
+              <view class="status-value">
+                {{getOperationType(item)}}
+              </view>
+            </view>
+          </view>
+          <view class="operator-info">
+            <view class="operator-label">操作人:</view>
+            <view class="operator-name">{{item.operation_user.username || '未知'}}</view>
+            <view class="operation-detail">
+              <view class="operation-detail-text" bindtap="toggleDetail" data-index="{{index}}">
+                {{item.showDetail ? '收起详情' : '查看详情'}}
+              </view>
+            </view>
+          </view>
+          
+          <!-- 详细信息 -->
+          <view class="detail-section" wx:if="{{item.showDetail}}">
+            <view class="detail-item">
+              <view class="detail-label">操作ID:</view>
+              <view class="detail-value">{{item.status_id}}</view>
+            </view>
+            <view class="detail-item">
+              <view class="detail-label">设备类型:</view>
+              <view class="detail-value">光照设备</view>
+            </view>
+            <view class="detail-item">
+              <view class="detail-label">操作时间:</view>
+              <view class="detail-value">{{item.operation_time}}</view>
+            </view>
+            <view class="detail-item">
+              <view class="detail-label">操作用户ID:</view>
+              <view class="detail-value">{{item.operation_user.user_id}}</view>
+            </view>
+          </view>
+        </view>
+      </block>
+      
+      <!-- 其他设备历史记录项 -->
+      <block wx:else>
+        <view class="history-item" wx:for="{{historyList}}" wx:key="status_id">
+          <view class="history-header">
+            <view class="device-name">{{item.device_name || deviceName}}</view>
+            <view class="operation-time">{{item.operation_time}}</view>
+          </view>
+          <view class="history-content">
+            <view class="status-item">
+              <view class="status-label">状态</view>
+              <view class="status-value {{item.power_status === 1 ? 'active' : ''}}">
+                {{item.power_status === 1 ? '开启' : '关闭'}}
+              </view>
+            </view>
+            <view class="status-item" wx:if="{{item.level !== undefined}}">
+              <view class="status-label">档位</view>
+              <view class="status-value">
+                {{item.level}} 档
+              </view>
+            </view>
+            <view class="status-item">
+              <view class="status-label">自动模式</view>
+              <view class="status-value {{item.auto_mode === 1 ? 'active' : ''}}">
+                {{item.auto_mode === 1 ? '已开启' : '已关闭'}}
+              </view>
+            </view>
+            <view class="status-item operation-type">
+              <view class="status-label">操作类型</view>
+              <view class="status-value">
+                {{getOperationType(item)}}
+              </view>
+            </view>
+          </view>
+          <view class="operator-info">
+            <view class="operator-label">操作人:</view>
+            <view class="operator-name">{{item.operation_user.username || '未知'}}</view>
+            <view class="operation-detail">
+              <view class="operation-detail-text" bindtap="toggleDetail" data-index="{{index}}">
+                {{item.showDetail ? '收起详情' : '查看详情'}}
+              </view>
+            </view>
+          </view>
+          
+          <!-- 详细信息 -->
+          <view class="detail-section" wx:if="{{item.showDetail}}">
+            <view class="detail-item">
+              <view class="detail-label">操作ID:</view>
+              <view class="detail-value">{{item.status_id}}</view>
+            </view>
+            <view class="detail-item">
+              <view class="detail-label">设备类型:</view>
+              <view class="detail-value">{{item.device_type}}</view>
+            </view>
+            <view class="detail-item">
+              <view class="detail-label">操作时间:</view>
+              <view class="detail-value">{{item.operation_time}}</view>
+            </view>
+            <view class="detail-item">
+              <view class="detail-label">操作用户ID:</view>
+              <view class="detail-value">{{item.operation_user.user_id}}</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </block>
+    
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{historyList.length === 0 && !loading}}">
+      <view class="empty-icon">📋</view>
+      <view class="empty-text">暂无历史记录</view>
+    </view>
+    
+    <!-- 加载状态 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <view class="loading-icon"></view>
+      <view class="loading-text">加载中...</view>
+    </view>
+    
+    <!-- 加载更多 -->
+    <view class="load-more" wx:if="{{!hasMore && historyList.length > 0}}">
+      已加载全部数据
+    </view>
+  </scroll-view>
+</view> 

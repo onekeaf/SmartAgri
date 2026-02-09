@@ -1,0 +1,121 @@
+<!--index.wxml-->
+<view class="page-container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="header-title">智慧农业系统</view>
+    <view class="header-subtitle">实时监控 · 智能管理</view>
+  </view>
+  
+  <!-- 最后更新时间显示框 -->
+  <view class="update-time-container">
+    <view class="update-time-text">数据上次更新时间：{{lastUpdateTime}}</view>
+  </view>
+
+  <scroll-view class="scrollarea" scroll-y type="list">
+    <!-- 数据概览 -->
+    <view class="overview-section">
+      <view class="overview-row">
+        <view class="overview-item soil">
+          <view class="overview-icon">💧</view>
+          <view class="overview-data">
+            <view class="overview-value animated">{{soilHumidity}}%</view>
+            <view class="overview-label">土壤湿度</view>
+          </view>
+          <view class="overview-detail" bindtap="viewSoilDetails">详情</view>
+        </view>
+        <view class="overview-item humidity">
+          <view class="overview-icon">💨</view>
+          <view class="overview-data">
+            <view class="overview-value animated">{{airHumidity}}%</view>
+            <view class="overview-label">空气湿度</view>
+          </view>
+          <view class="overview-detail" bindtap="viewAirDetails">详情</view>
+        </view>
+      </view>
+      <view class="overview-row">
+        <view class="overview-item temperature">
+          <view class="overview-icon">🌡️</view>
+          <view class="overview-data">
+            <view class="overview-value animated">{{airTemperature}}°C</view>
+            <view class="overview-label">空气温度</view>
+          </view>
+          <view class="overview-detail" bindtap="viewAirDetails">详情</view>
+        </view>
+        <view class="overview-item light">
+          <view class="overview-icon">☀️</view>
+          <view class="overview-data">
+            <view class="overview-value animated">{{lightIntensity}}</view>
+            <view class="overview-label">光照强度</view>
+          </view>
+          <view class="overview-detail" bindtap="viewLightDetails">详情</view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- SSAA控制模块 -->
+    <view class="card ssaa-card">
+      <view class="card-header">
+        <view class="card-title">超级智能农业代理</view>
+        <view class="card-action" bindtap="viewSsaaDetails">查看详情</view>
+      </view>
+      <view class="card-content">
+        <view class="ssaa-container">
+          <view class="ssaa-info">
+            <view class="ssaa-icon">🤖</view>
+            <view class="ssaa-description">
+              <view class="ssaa-name">SSAA代理</view>
+              <view class="ssaa-status">{{ssaaEnabled ? '已启用' : '已禁用'}}</view>
+            </view>
+          </view>
+          <view class="ssaa-control">
+            <view class="ssaa-label">自动管理</view>
+            <switch checked="{{ssaaEnabled}}" bindchange="toggleSsaa" color="#4CAF50" />
+          </view>
+        </view>
+        <view class="ssaa-tips" wx:if="{{ssaaEnabled}}">
+          <text class="ssaa-tips-icon">📊</text>
+          <text class="ssaa-tips-text">SSAA代理已启用，系统将全自动监控和管理农场环境</text>
+        </view>
+        <view class="ssaa-last-update" wx:if="{{ssaaLastUpdate}}">
+          <text>上次更新: {{ssaaLastUpdate}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 消息提示模块 -->
+    <view class="card alert-card">
+      <view class="card-header">
+        <view class="card-title">智能提醒</view>
+        <view class="card-action" bindtap="viewAllAlerts">查看历史</view>
+      </view>
+      <view class="card-content">
+        <!-- 有消息提醒时显示 -->
+        <view class="alerts-container" wx:if="{{alerts.length > 0}}">
+          <view class="alert-item {{latestAlert.type}}">
+            <view class="alert-icon">{{latestAlert.icon}}</view>
+            <view class="alert-content" bindtap="viewAllAlerts">
+              <view class="alert-title">{{latestAlert.title}}</view>
+              <view class="alert-message">{{latestAlert.message}}</view>
+              <view class="alert-time">{{latestAlert.time}}</view>
+            </view>
+          </view>
+          <!-- 一键解决按钮 -->
+          <view class="quick-solve-btn" bindtap="quickSolveAlert" data-alert="{{latestAlert}}">
+            <view class="solve-icon">🤖</view>
+            <view class="solve-text">一键解决</view>
+          </view>
+          <view class="alerts-count" wx:if="{{alerts.length > 1}}">
+            还有 {{alerts.length - 1}} 条提醒
+          </view>
+        </view>
+        
+        <!-- 无消息提醒时显示 -->
+        <view class="no-alerts" wx:else>
+          <view class="no-alerts-icon">✓</view>
+          <view class="no-alerts-text">设备运行正常，暂无提醒</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
