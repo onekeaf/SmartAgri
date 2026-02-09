@@ -1,0 +1,61 @@
+.payment-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.payment-content {
+  padding-top: 46px;
+}
+
+.payment-form {
+  padding: 20px 12px;
+}
+
+.amount-section {
+  background-color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+  margin-bottom: 12px;
+
+  .amount-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+  }
+
+  .amount-value {
+    font-size: 36px;
+    color: #ff4444;
+    font-weight: bold;
+  }
+}
+
+.payment-methods {
+  margin-bottom: 20px;
+}
+
+.method-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .method-name {
+    font-size: 15px;
+    color: #333;
+  }
+}
+
+.payment-button-wrapper {
+  padding: 0 12px;
+}
+
+.payment-success {
+  padding-top: 60px;
+}
+
+.loading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

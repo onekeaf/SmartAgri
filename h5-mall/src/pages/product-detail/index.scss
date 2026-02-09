@@ -1,0 +1,168 @@
+.product-detail-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 50px;
+}
+
+.content-wrapper {
+  padding-bottom: 60px;
+}
+
+.swipe-image {
+  width: 100%;
+  height: 375px;
+  background: #fff;
+  
+  :deep(.van-image__error) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-size: 80px;
+  font-weight: bold;
+}
+
+.price-section {
+  padding: 16px;
+  background: #fff;
+  margin-bottom: 8px;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.current-price {
+  font-size: 28px;
+  color: #f44336;
+  font-weight: bold;
+}
+
+.original-price {
+  font-size: 14px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.sales {
+  font-size: 12px;
+  color: #999;
+  margin-left: auto;
+}
+
+.product-name {
+  padding: 16px;
+  background: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.info-card {
+  margin: 8px 0;
+}
+
+.description-section {
+  margin: 8px 0;
+  padding: 16px;
+  background: #fff;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.description-content {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.farmer-card {
+  margin: 8px 0;
+}
+
+.farmer-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.farmer-avatar {
+  flex-shrink: 0;
+  
+  :deep(.van-image__error) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.farmer-details {
+  flex: 1;
+}
+
+.farmer-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity-popup-content {
+  padding: 10px 0;
+}
+
+.popup-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.quantity-control {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+:deep(.van-action-bar) {
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}

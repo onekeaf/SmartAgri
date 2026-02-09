@@ -15,6 +15,10 @@ Component({
         text: "AI助手"
       },
       {
+        pagePath: "/pages/mall/index/index",
+        text: "商城"
+      },
+      {
         pagePath: "/pages/profile/profile",
         text: "我的"
       }

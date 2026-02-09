@@ -35,7 +35,7 @@ Page({
     this.getUserInfo();
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
-        selected: 1
+        selected: 4
       });
     }
   },
@@ -49,28 +49,28 @@ Page({
       });
       return;
     }
-    
+
     const { userId } = this.data;
     if (!userId) {
       return;
     }
-    
+
     wx.showLoading({
       title: '加载中...'
     });
-    
+
     // 获取用户详情
     request({
       url: `/users/${userId}`,
       method: 'GET'
     }).then(res => {
       wx.hideLoading();
-      
+
       // 确保有头像URL，如果没有则使用默认头像
       if (!res.data.avatar_url) {
         res.data.avatar_url = defaultAvatarBase64;
       }
-      
+
       this.setData({
         userInfo: res.data
       });
@@ -86,11 +86,11 @@ Page({
   // 编辑用户信息
   editUserInfo() {
     const { userInfo, userId } = this.data;
-    
+
     wx.showLoading({
       title: '提交中...'
     });
-    
+
     wx.navigateTo({
       url: '/pages/edit-profile/edit-profile',
       success: (res) => {
@@ -118,11 +118,11 @@ Page({
   updateWorkStatus(e) {
     const { status } = e.currentTarget.dataset;
     const { userId } = this.data;
-    
+
     wx.showLoading({
       title: '更新中...'
     });
-    
+
     request({
       url: `/users/${userId}`,
       method: 'PUT',
@@ -135,7 +135,7 @@ Page({
         title: '状态已更新',
         icon: 'success'
       });
-      
+
       // 更新本地状态
       this.setData({
         'userInfo.work_status': status
@@ -158,7 +158,7 @@ Page({
         if (res.confirm) {
           // 清除登录信息
           wx.clearStorageSync();
-          
+
           // 跳转到登录页
           wx.redirectTo({
             url: '/pages/login/login'
@@ -167,4 +167,4 @@ Page({
       }
     });
   }
-}); 
+});

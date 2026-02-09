@@ -1,0 +1,87 @@
+.address-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 80px;
+}
+
+.address-content {
+  padding-top: 46px;
+}
+
+.empty-address {
+  padding: 60px 20px;
+}
+
+.address-list {
+  padding: 12px;
+}
+
+.address-item {
+  margin-bottom: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.address-card {
+  padding: 16px;
+  background-color: #fff;
+
+  .address-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+
+    .address-name {
+      font-size: 15px;
+      font-weight: bold;
+      color: #333;
+      margin-right: 12px;
+    }
+
+    .address-phone {
+      font-size: 14px;
+      color: #666;
+      margin-right: 8px;
+    }
+  }
+
+  .address-detail {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .address-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.delete-button {
+  height: 100%;
+}
+
+.address-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 16px;
+  background-color: #fff;
+  border-top: 1px solid #eee;
+  z-index: 100;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #f5f5f5;
+
+  .form-title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+}

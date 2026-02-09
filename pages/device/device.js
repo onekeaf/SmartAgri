@@ -33,7 +33,7 @@ Page({
   onShow() {
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
-        selected: 3  // 设备管理在tabBar中的索引
+        selected: 1  // 设备管理在tabBar中的索引
       });
     }
 

@@ -12,7 +12,9 @@
     "pages/data-details/data-details",
     "pages/alerts/alerts",
     "pages/device/device",
-    "pages/ssaa/ssaa"
+    "pages/ssaa/ssaa",
+    "pages/mall/index/index",
+    "pages/mall/edit-product/edit-product"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -43,6 +45,12 @@
         "text": "AI助手",
         "iconPath": "assets/icons/assistant.png",
         "selectedIconPath": "assets/icons/assistant-active.png"
+      },
+      {
+        "pagePath": "pages/mall/index/index",
+        "text": "商城",
+        "iconPath": "assets/icons/mall.png",
+        "selectedIconPath": "assets/icons/mall-active.png"
       },
       {
         "pagePath": "pages/profile/profile",

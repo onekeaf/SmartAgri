@@ -1,0 +1,132 @@
+
+<view class="container">
+  <!-- 图片上传区域 -->
+  <view class="image-section">
+    <scroll-view class="image-scroll" scroll-x="true">
+      <view class="image-list">
+        <block wx:for="{{images}}" wx:key="index">
+          <view class="image-item">
+            <image class="image-preview" src="{{item}}" mode="aspectFill"></image>
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">
+              <text class="delete-icon">×</text>
+            </view>
+          </view>
+        </block>
+        <view class="add-image-btn" bindtap="chooseImage" wx:if="{{images.length < 9}}">
+          <text class="add-icon">+</text>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="image-tip">第一张为主图，最多9张</view>
+  </view>
+
+  <!-- 表单区域 -->
+  <scroll-view class="form-scroll" scroll-y="true">
+    <!-- 商品名称 -->
+    <view class="form-item">
+      <view class="form-label"><text class="required">*</text>商品名称</view>
+      <input 
+        class="form-input" 
+        type="text" 
+        maxlength="50" 
+        placeholder="请输入商品名称"
+        value="{{productName}}"
+        data-field="productName"
+        bindinput="onInputChange"
+      />
+    </view>
+
+    <!-- 商品分类 -->
+    <view class="form-item">
+      <view class="form-label"><text class="required">*</text>商品分类</view>
+      <picker 
+        mode="selector" 
+        range="{{categories}}" 
+        value="{{categoryIndex}}" 
+        bindchange="onCategoryChange"
+      >
+        <view class="picker-content">
+          <text class="picker-text {{categoryIndex === -1 ? 'placeholder' : ''}}">
+            {{categoryIndex === -1 ? '请选择分类' : categories[categoryIndex]}}
+          </text>
+          <text class="picker-arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 商品价格 -->
+    <view class="form-item">
+      <view class="form-label"><text class="required">*</text>商品价格</view>
+      <view class="input-with-unit">
+        <input 
+          class="form-input" 
+          type="digit" 
+          placeholder="请输入价格"
+          value="{{price}}"
+          data-field="price"
+          bindinput="onInputChange"
+        />
+        <text class="unit">元</text>
+      </view>
+    </view>
+
+    <!-- 商品规格 -->
+    <view class="form-item">
+      <view class="form-label">商品规格</view>
+      <input 
+        class="form-input" 
+        type="text" 
+        placeholder="如：500g/袋、1kg/箱"
+        value="{{specification}}"
+        data-field="specification"
+        bindinput="onInputChange"
+      />
+    </view>
+
+    <!-- 库存数量 -->
+    <view class="form-item">
+      <view class="form-label"><text class="required">*</text>库存数量</view>
+      <input 
+        class="form-input" 
+        type="number" 
+        placeholder="请输入库存数量"
+        value="{{stock}}"
+        data-field="stock"
+        bindinput="onInputChange"
+      />
+    </view>
+
+    <!-- 产地信息 -->
+    <view class="form-item">
+      <view class="form-label"><text class="required">*</text>产地信息</view>
+      <input 
+        class="form-input" 
+        type="text" 
+        placeholder="请输入产地"
+        value="{{origin}}"
+        data-field="origin"
+        bindinput="onInputChange"
+      />
+    </view>
+
+    <!-- 商品描述 -->
+    <view class="form-item">
+      <view class="form-label"><text class="required">*</text>商品描述</view>
+      <view class="textarea-wrapper">
+        <textarea 
+          class="form-textarea" 
+          maxlength="500" 
+          placeholder="请输入商品描述"
+          value="{{description}}"
+          bindinput="onDescriptionInput"
+        ></textarea>
+        <view class="textarea-counter">{{descriptionLength}}/500</view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部保存按钮 -->
+  <view class="bottom-btn">
+    <button class="save-btn" bindtap="saveProduct">保存</button>
+  </view>
+</view>

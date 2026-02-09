@@ -1,0 +1,66 @@
+
+<view class="container">
+  <!-- 统计栏 -->
+  <view class="stats-bar">
+    <view class="stat-item">
+      <text class="stat-value">{{totalCount}}</text>
+      <text class="stat-label">商品总数</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value on-sale">{{onSaleCount}}</text>
+      <text class="stat-label">在售</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value off-sale">{{offSaleCount}}</text>
+      <text class="stat-label">已下架</text>
+    </view>
+  </view>
+
+  <!-- 商品网格列表 -->
+  <view class="product-grid" wx:if="{{productList.length > 0}}">
+    <view 
+      class="product-card" 
+      wx:for="{{productList}}" 
+      wx:key="product_id"
+      bindtap="onProductTap"
+      data-product-id="{{item.product_id}}"
+      bindlongpress="onProductLongPress"
+      data-status="{{item.status}}"
+    >
+      <!-- 商品图片 -->
+      <view class="product-image-wrapper">
+        <image class="product-image" src="{{item.images[0] || ''}}" mode="aspectFill"></image>
+        <!-- 状态标签 -->
+        <view class="status-tag {{item.status === 1 || item.status === 'on_sale' ? 'status-on-sale' : 'status-off-sale'}}">
+          {{item.status === 1 || item.status === 'on_sale' ? '在售' : '已下架'}}
+        </view>
+      </view>
+      
+      <!-- 商品信息 -->
+      <view class="product-info">
+        <text class="product-name">{{item.product_name}}</text>
+        <text class="product-price">¥{{item.price}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">📦</text>
+    <text class="empty-text">暂无商品</text>
+    <text class="empty-hint">点击右下角按钮添加商品</text>
+  </view>
+
+  <!-- 加载更多提示 -->
+  <view class="load-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="load-more" wx:elif="{{!hasMore && productList.length > 0}}">
+    <text>没有更多了</text>
+  </view>
+
+  <!-- 悬浮添加按钮 -->
+  <view class="float-button" bindtap="onAddProduct">
+    <text class="float-button-icon">+</text>
+  </view>
+</view>
