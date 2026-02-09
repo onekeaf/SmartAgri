@@ -4,58 +4,58 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/Home.vue')
+    component: () => import('../pages/home/index.vue')
   },
   {
     path: '/product/:id',
     name: 'ProductDetail',
-    component: () => import('../views/ProductDetail.vue')
+    component: () => import('../pages/product-detail/index.vue')
   },
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import('../views/Cart.vue'),
+    component: () => import('../pages/cart/index.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/checkout',
     name: 'Checkout',
-    component: () => import('../views/Checkout.vue'),
+    component: () => import('../pages/checkout/index.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/payment',
     name: 'Payment',
-    component: () => import('../views/Payment.vue'),
+    component: () => import('../pages/payment/index.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/orders',
     name: 'Orders',
-    component: () => import('../views/Orders.vue'),
+    component: () => import('../pages/orders/index.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/order/:id',
     name: 'OrderDetail',
-    component: () => import('../views/OrderDetail.vue'),
+    component: () => import('../pages/order-detail/index.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/address',
     name: 'Address',
-    component: () => import('../views/Address.vue'),
+    component: () => import('../pages/address/index.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import('../pages/login/index.vue')
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import('../views/Profile.vue'),
+    component: () => import('../pages/profile/index.vue'),
     meta: { requiresAuth: true }
   }
 ]
