@@ -1,38 +1,38 @@
-&lt;template&gt;
-  &lt;div class="product-card" @click="handleClick"&gt;
-    &lt;div class="product-image-container"&gt;
-      &lt;van-image
+<template>
+  <div class="product-card" @click="handleClick">
+    <div class="product-image-container">
+      <van-image
         :src="product.images?.[0] || '/images/products/default.jpg'"
         fit="cover"
         class="product-image"
-      &gt;
-        &lt;template #error&gt;
-          &lt;div class="image-placeholder"&gt;
+      >
+        <template #error>
+          <div class="image-placeholder">
             {{ product.product_name?.charAt(0) || '商' }}
-          &lt;/div&gt;
-        &lt;/template&gt;
-      &lt;/van-image&gt;
-    &lt;/div&gt;
+          </div>
+        </template>
+      </van-image>
+    </div>
     
-    &lt;div class="product-info"&gt;
-      &lt;div class="product-name"&gt;{{ product.product_name }}&lt;/div&gt;
+    <div class="product-info">
+      <div class="product-name">{{ product.product_name }}</div>
       
-      &lt;div class="price-row"&gt;
-        &lt;span class="current-price"&gt;¥{{ product.price.toFixed(2) }}&lt;/span&gt;
-        &lt;span v-if="product.original_price" class="original-price"&gt;
+      <div class="price-row">
+        <span class="current-price">¥{{ product.price.toFixed(2) }}</span>
+        <span v-if="product.original_price" class="original-price">
           ¥{{ product.original_price.toFixed(2) }}
-        &lt;/span&gt;
-      &lt;/div&gt;
+        </span>
+      </div>
       
-      &lt;div class="product-meta"&gt;
-        &lt;span class="sales"&gt;已售{{ product.sales }}件&lt;/span&gt;
-        &lt;span v-if="product.origin" class="origin"&gt;{{ product.origin }}&lt;/span&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+      <div class="product-meta">
+        <span class="sales">已售{{ product.sales }}件</span>
+        <span v-if="product.origin" class="origin">{{ product.origin }}</span>
+      </div>
+    </div>
+  </div>
+</template>
 
-&lt;script setup&gt;
+<script setup>
 const props = defineProps({
   product: {
     type: Object,
@@ -42,12 +42,12 @@ const props = defineProps({
 
 const emit = defineEmits(['click']);
 
-const handleClick = () =&gt; {
+const handleClick = () => {
   emit('click', props.product);
 };
-&lt;/script&gt;
+</script>
 
-&lt;style lang="scss" scoped&gt;
+<style lang="scss" scoped>
 .product-card {
   background: #fff;
   border-radius: 8px;
@@ -143,4 +143,4 @@ const handleClick = () =&gt; {
   padding: 2px 6px;
   border-radius: 2px;
 }
-&lt;/style&gt;
+</style>

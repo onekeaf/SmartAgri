@@ -1,60 +1,60 @@
-&lt;template&gt;
-  &lt;div class="checkout-page"&gt;
-    &lt;van-nav-bar title="确认订单" left-arrow @click-left="onClickLeft" /&gt;
+<template>
+  <div class="checkout-page">
+    <van-nav-bar title="确认订单" left-arrow @click-left="onClickLeft" />
     
-    &lt;div class="checkout-content"&gt;
-      &lt;van-cell-group inset class="address-section"&gt;
-        &lt;van-cell is-link @click="goToAddress"&gt;
-          &lt;template #title&gt;
-            &lt;div v-if="selectedAddress" class="address-info"&gt;
-              &lt;div class="address-name"&gt;
-                &lt;span class="name"&gt;{{ selectedAddress.name }}&lt;/span&gt;
-                &lt;span class="phone"&gt;{{ selectedAddress.phone }}&lt;/span&gt;
-              &lt;/div&gt;
-              &lt;div class="address-detail"&gt;
+    <div class="checkout-content">
+      <van-cell-group inset class="address-section">
+        <van-cell is-link @click="goToAddress">
+          <template #title>
+            <div v-if="selectedAddress" class="address-info">
+              <div class="address-name">
+                <span class="name">{{ selectedAddress.name }}</span>
+                <span class="phone">{{ selectedAddress.phone }}</span>
+              </div>
+              <div class="address-detail">
                 {{ selectedAddress.province }}{{ selectedAddress.city }}{{ selectedAddress.district }}{{ selectedAddress.detail }}
-              &lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div v-else class="no-address"&gt;
+              </div>
+            </div>
+            <div v-else class="no-address">
               请选择收货地址
-            &lt;/div&gt;
-          &lt;/template&gt;
-        &lt;/van-cell&gt;
-      &lt;/van-cell-group&gt;
+            </div>
+          </template>
+        </van-cell>
+      </van-cell-group>
 
-      &lt;van-cell-group inset class="products-section"&gt;
-        &lt;van-cell title="商品清单" /&gt;
-        &lt;div v-for="product in products" :key="product.product_id" class="product-item"&gt;
-          &lt;img :src="product.image" :alt="product.product_name" class="product-image" /&gt;
-          &lt;div class="product-info"&gt;
-            &lt;div class="product-name"&gt;{{ product.product_name }}&lt;/div&gt;
-            &lt;div class="product-spec"&gt;{{ product.specification }}&lt;/div&gt;
-            &lt;div class="product-bottom"&gt;
-              &lt;span class="price"&gt;¥{{ product.price }}&lt;/span&gt;
-              &lt;span class="quantity"&gt;x{{ product.quantity }}&lt;/span&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/van-cell-group&gt;
+      <van-cell-group inset class="products-section">
+        <van-cell title="商品清单" />
+        <div v-for="product in products" :key="product.product_id" class="product-item">
+          <img :src="product.image" :alt="product.product_name" class="product-image" />
+          <div class="product-info">
+            <div class="product-name">{{ product.product_name }}</div>
+            <div class="product-spec">{{ product.specification }}</div>
+            <div class="product-bottom">
+              <span class="price">¥{{ product.price }}</span>
+              <span class="quantity">x{{ product.quantity }}</span>
+            </div>
+          </div>
+        </div>
+      </van-cell-group>
 
-      &lt;van-cell-group inset class="price-section"&gt;
-        &lt;van-cell title="商品金额" :value="'¥' + goodsAmount" /&gt;
-        &lt;van-cell title="运费" value="¥5.00" /&gt;
-        &lt;van-cell title="合计" :value="'¥' + totalAmount" value-class="total-price" /&gt;
-      &lt;/van-cell-group&gt;
-    &lt;/div&gt;
+      <van-cell-group inset class="price-section">
+        <van-cell title="商品金额" :value="'¥' + goodsAmount" />
+        <van-cell title="运费" value="¥5.00" />
+        <van-cell title="合计" :value="'¥' + totalAmount" value-class="total-price" />
+      </van-cell-group>
+    </div>
 
-    &lt;div class="checkout-footer"&gt;
-      &lt;div class="total-info"&gt;
-        &lt;span class="total-text"&gt;合计：&lt;/span&gt;
-        &lt;span class="total-amount"&gt;¥{{ totalAmount }}&lt;/span&gt;
-      &lt;/div&gt;
-      &lt;van-button type="success" round @click="submitOrder"&gt;提交订单&lt;/van-button&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+    <div class="checkout-footer">
+      <div class="total-info">
+        <span class="total-text">合计：</span>
+        <span class="total-amount">¥{{ totalAmount }}</span>
+      </div>
+      <van-button type="success" round @click="submitOrder">提交订单</van-button>
+    </div>
+  </div>
+</template>
 
-&lt;script setup&gt;
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { getCart, saveCart, getAddresses, saveOrders, getProducts } from '@/utils/storage'
@@ -170,9 +170,9 @@ onMounted(() => {
   loadProducts()
   loadAddress()
 })
-&lt;/script&gt;
+</script>
 
-&lt;style scoped lang="scss"&gt;
+<style scoped lang="scss">
 .checkout-page {
   min-height: 100vh;
   background-color: #f5f5f5;
@@ -320,4 +320,4 @@ onMounted(() => {
     }
   }
 }
-&lt;/style&gt;
+</style>

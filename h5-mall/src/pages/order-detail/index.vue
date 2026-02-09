@@ -1,92 +1,92 @@
-&lt;template&gt;
-  &lt;div class="order-detail-page"&gt;
-    &lt;van-nav-bar title="订单详情" left-arrow @click-left="onClickLeft" /&gt;
+<template>
+  <div class="order-detail-page">
+    <van-nav-bar title="订单详情" left-arrow @click-left="onClickLeft" />
     
-    &lt;div v-if="order" class="detail-content"&gt;
-      &lt;div class="status-section"&gt;
-        &lt;van-icon :name="getStatusIcon(order.status)" size="48" :color="getStatusColor(order.status)" /&gt;
-        &lt;div class="status-text"&gt;{{ getStatusText(order.status) }}&lt;/div&gt;
-      &lt;/div&gt;
+    <div v-if="order" class="detail-content">
+      <div class="status-section">
+        <van-icon :name="getStatusIcon(order.status)" size="48" :color="getStatusColor(order.status)" />
+        <div class="status-text">{{ getStatusText(order.status) }}</div>
+      </div>
 
-      &lt;van-cell-group inset class="address-section"&gt;
-        &lt;van-cell title="收货地址" is-link :value="formattedAddress" /&gt;
-      &lt;/van-cell-group&gt;
+      <van-cell-group inset class="address-section">
+        <van-cell title="收货地址" is-link :value="formattedAddress" />
+      </van-cell-group>
 
-      &lt;van-cell-group inset class="products-section"&gt;
-        &lt;div class="section-title"&gt;商品清单&lt;/div&gt;
-        &lt;div 
+      <van-cell-group inset class="products-section">
+        <div class="section-title">商品清单</div>
+        <div 
           v-for="product in order.products" 
           :key="product.product_id" 
           class="product-item"
-        &gt;
-          &lt;img :src="product.image" :alt="product.product_name" class="product-image" /&gt;
-          &lt;div class="product-info"&gt;
-            &lt;div class="product-name"&gt;{{ product.product_name }}&lt;/div&gt;
-            &lt;div class="product-bottom"&gt;
-              &lt;span class="price"&gt;¥{{ product.price }}&lt;/span&gt;
-              &lt;span class="quantity"&gt;x{{ product.quantity }}&lt;/span&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/van-cell-group&gt;
+        >
+          <img :src="product.image" :alt="product.product_name" class="product-image" />
+          <div class="product-info">
+            <div class="product-name">{{ product.product_name }}</div>
+            <div class="product-bottom">
+              <span class="price">¥{{ product.price }}</span>
+              <span class="quantity">x{{ product.quantity }}</span>
+            </div>
+          </div>
+        </div>
+      </van-cell-group>
 
-      &lt;van-cell-group inset class="info-section"&gt;
-        &lt;van-cell title="订单信息" /&gt;
-        &lt;van-cell title="订单号" :value="order.order_id" /&gt;
-        &lt;van-cell title="下单时间" :value="formatTime(order.created_at)" /&gt;
-        &lt;van-cell title="支付方式" :value="getPaymentMethodText(order.payment_method)" /&gt;
-      &lt;/van-cell-group&gt;
+      <van-cell-group inset class="info-section">
+        <van-cell title="订单信息" />
+        <van-cell title="订单号" :value="order.order_id" />
+        <van-cell title="下单时间" :value="formatTime(order.created_at)" />
+        <van-cell title="支付方式" :value="getPaymentMethodText(order.payment_method)" />
+      </van-cell-group>
 
-      &lt;van-cell-group inset class="price-section"&gt;
-        &lt;van-cell title="商品金额" :value="'¥' + goodsAmount" /&gt;
-        &lt;van-cell title="运费" value="¥5.00" /&gt;
-        &lt;van-cell title="合计" :value="'¥' + order.total_amount" value-class="total-price" /&gt;
-      &lt;/van-cell-group&gt;
+      <van-cell-group inset class="price-section">
+        <van-cell title="商品金额" :value="'¥' + goodsAmount" />
+        <van-cell title="运费" value="¥5.00" />
+        <van-cell title="合计" :value="'¥' + order.total_amount" value-class="total-price" />
+      </van-cell-group>
 
-      &lt;div class="bottom-actions"&gt;
-        &lt;van-button 
+      <div class="bottom-actions">
+        <van-button 
           v-if="order.status === 'pending_payment'"
           @click="cancelOrder"
-        &gt;
+        >
           取消订单
-        &lt;/van-button&gt;
-        &lt;van-button 
+        </van-button>
+        <van-button 
           v-if="order.status === 'pending_payment'"
           type="success" 
           @click="payOrder"
-        &gt;
+        >
           去支付
-        &lt;/van-button&gt;
-        &lt;van-button 
+        </van-button>
+        <van-button 
           v-if="order.status === 'pending_receipt'"
           type="success" 
           @click="confirmReceipt"
-        &gt;
+        >
           确认收货
-        &lt;/van-button&gt;
-        &lt;van-button 
+        </van-button>
+        <van-button 
           v-if="order.status === 'completed'"
           @click="buyAgain"
-        &gt;
+        >
           再次购买
-        &lt;/van-button&gt;
-        &lt;van-button 
+        </van-button>
+        <van-button 
           v-if="order.status === 'cancelled'"
           type="danger" 
           @click="deleteOrder"
-        &gt;
+        >
           删除订单
-        &lt;/van-button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
+        </van-button>
+      </div>
+    </div>
 
-    &lt;div v-else class="empty-state"&gt;
-      &lt;van-empty description="订单不存在" /&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+    <div v-else class="empty-state">
+      <van-empty description="订单不存在" />
+    </div>
+  </div>
+</template>
 
-&lt;script setup&gt;
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { getOrders, saveOrders, saveCart } from '@/utils/storage'
@@ -263,9 +263,9 @@ const onClickLeft = () => {
 onMounted(() => {
   loadOrder()
 })
-&lt;/script&gt;
+</script>
 
-&lt;style scoped lang="scss"&gt;
+<style scoped lang="scss">
 .order-detail-page {
   min-height: 100vh;
   background-color: #f5f5f5;
@@ -387,4 +387,4 @@ onMounted(() => {
 .empty-state {
   padding: 60px 20px;
 }
-&lt;/style&gt;
+</style>

@@ -1,42 +1,42 @@
-&lt;template&gt;
-  &lt;div class="login-page"&gt;
-    &lt;div class="login-header"&gt;
-      &lt;van-icon name="flower-o" size="64" color="#4CAF50" /&gt;
-      &lt;h1 class="app-title"&gt;智慧农业商城&lt;/h1&gt;
-      &lt;p class="app-subtitle"&gt;绿色健康  品质生活&lt;/p&gt;
-    &lt;/div&gt;
+<template>
+  <div class="login-page">
+    <div class="login-header">
+      <van-icon name="flower-o" size="64" color="#4CAF50" />
+      <h1 class="app-title">智慧农业商城</h1>
+      <p class="app-subtitle">绿色健康  品质生活</p>
+    </div>
 
-    &lt;div class="login-form"&gt;
-      &lt;van-field
+    <div class="login-form">
+      <van-field
         v-model="phone"
         type="tel"
         label="手机号"
         placeholder="请输入手机号"
         maxlength="11"
         :rules="[{ required: true, message: '请输入手机号' }]"
-      /&gt;
+      />
       
-      &lt;van-field
+      <van-field
         v-model="code"
         type="digit"
         label="验证码"
         placeholder="请输入验证码"
         maxlength="4"
         :rules="[{ required: true, message: '请输入验证码' }]"
-      &gt;
-        &lt;template #button&gt;
-          &lt;van-button 
+      >
+        <template #button>
+          <van-button 
             size="small" 
             type="success" 
             :disabled="countdown > 0"
             @click="sendCode"
-          &gt;
+          >
             {{ countdown > 0 ? `${countdown}秒后重发` : '发送验证码' }}
-          &lt;/van-button&gt;
-        &lt;/template&gt;
-      &lt;/van-field&gt;
+          </van-button>
+        </template>
+      </van-field>
 
-      &lt;van-button 
+      <van-button 
         type="success" 
         block 
         round 
@@ -45,19 +45,19 @@
         loading-text="登录中..."
         class="login-button"
         @click="handleLogin"
-      &gt;
+      >
         登录
-      &lt;/van-button&gt;
-    &lt;/div&gt;
+      </van-button>
+    </div>
 
-    &lt;div class="login-tips"&gt;
-      &lt;p&gt;测试账号：任意手机号&lt;/p&gt;
-      &lt;p&gt;测试验证码：1234&lt;/p&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+    <div class="login-tips">
+      <p>测试账号：任意手机号</p>
+      <p>测试验证码：1234</p>
+    </div>
+  </div>
+</template>
 
-&lt;script setup&gt;
+<script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { saveUser, getUser } from '@/utils/storage'
@@ -139,9 +139,9 @@ onMounted(() => {
     router.replace('/profile')
   }
 })
-&lt;/script&gt;
+</script>
 
-&lt;style scoped lang="scss"&gt;
+<style scoped lang="scss">
 .login-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -196,4 +196,4 @@ onMounted(() => {
     margin: 4px 0;
   }
 }
-&lt;/style&gt;
+</style>

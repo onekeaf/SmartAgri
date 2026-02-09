@@ -1,103 +1,103 @@
-&lt;template&gt;
-  &lt;div class="orders-page"&gt;
-    &lt;van-nav-bar title="我的订单" left-arrow @click-left="onClickLeft" /&gt;
+<template>
+  <div class="orders-page">
+    <van-nav-bar title="我的订单" left-arrow @click-left="onClickLeft" />
     
-    &lt;div class="orders-content"&gt;
-      &lt;van-tabs v-model:active="activeTab" sticky @change="onTabChange"&gt;
-        &lt;van-tab title="全部" name="all" /&gt;
-        &lt;van-tab title="待付款" name="pending_payment" /&gt;
-        &lt;van-tab title="待发货" name="pending_shipment" /&gt;
-        &lt;van-tab title="待收货" name="pending_receipt" /&gt;
-        &lt;van-tab title="已完成" name="completed" /&gt;
-      &lt;/van-tabs&gt;
+    <div class="orders-content">
+      <van-tabs v-model:active="activeTab" sticky @change="onTabChange">
+        <van-tab title="全部" name="all" />
+        <van-tab title="待付款" name="pending_payment" />
+        <van-tab title="待发货" name="pending_shipment" />
+        <van-tab title="待收货" name="pending_receipt" />
+        <van-tab title="已完成" name="completed" />
+      </van-tabs>
 
-      &lt;div class="orders-list"&gt;
-        &lt;div v-if="filteredOrders.length === 0" class="empty-orders"&gt;
-          &lt;van-empty description="暂无订单" /&gt;
-        &lt;/div&gt;
+      <div class="orders-list">
+        <div v-if="filteredOrders.length === 0" class="empty-orders">
+          <van-empty description="暂无订单" />
+        </div>
 
-        &lt;div v-else&gt;
-          &lt;div 
+        <div v-else>
+          <div 
             v-for="order in filteredOrders" 
             :key="order.order_id" 
             class="order-card"
             @click="goToOrderDetail(order.order_id)"
-          &gt;
-            &lt;div class="order-header"&gt;
-              &lt;span class="order-id"&gt;订单号：{{ order.order_id }}&lt;/span&gt;
-              &lt;van-tag :type="getStatusType(order.status)"&gt;
+          >
+            <div class="order-header">
+              <span class="order-id">订单号：{{ order.order_id }}</span>
+              <van-tag :type="getStatusType(order.status)">
                 {{ getStatusText(order.status) }}
-              &lt;/van-tag&gt;
-            &lt;/div&gt;
+              </van-tag>
+            </div>
 
-            &lt;div class="order-products"&gt;
-              &lt;div 
+            <div class="order-products">
+              <div 
                 v-for="product in order.products" 
                 :key="product.product_id" 
                 class="product-item"
-              &gt;
-                &lt;img :src="product.image" :alt="product.product_name" class="product-image" /&gt;
-                &lt;div class="product-info"&gt;
-                  &lt;div class="product-name"&gt;{{ product.product_name }}&lt;/div&gt;
-                  &lt;div class="product-bottom"&gt;
-                    &lt;span class="price"&gt;¥{{ product.price }}&lt;/span&gt;
-                    &lt;span class="quantity"&gt;x{{ product.quantity }}&lt;/span&gt;
-                  &lt;/div&gt;
-                &lt;/div&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
+              >
+                <img :src="product.image" :alt="product.product_name" class="product-image" />
+                <div class="product-info">
+                  <div class="product-name">{{ product.product_name }}</div>
+                  <div class="product-bottom">
+                    <span class="price">¥{{ product.price }}</span>
+                    <span class="quantity">x{{ product.quantity }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            &lt;div class="order-footer"&gt;
-              &lt;span class="total-amount"&gt;实付款：¥{{ order.total_amount }}&lt;/span&gt;
-              &lt;div class="order-actions"&gt;
-                &lt;van-button 
+            <div class="order-footer">
+              <span class="total-amount">实付款：¥{{ order.total_amount }}</span>
+              <div class="order-actions">
+                <van-button 
                   v-if="order.status === 'pending_payment'"
                   size="small" 
                   @click.stop="cancelOrder(order)"
-                &gt;
+                >
                   取消订单
-                &lt;/van-button&gt;
-                &lt;van-button 
+                </van-button>
+                <van-button 
                   v-if="order.status === 'pending_payment'"
                   size="small" 
                   type="success"
                   @click.stop="payOrder(order)"
-                &gt;
+                >
                   去支付
-                &lt;/van-button&gt;
-                &lt;van-button 
+                </van-button>
+                <van-button 
                   v-if="order.status === 'pending_receipt'"
                   size="small" 
                   type="success"
                   @click.stop="confirmReceipt(order)"
-                &gt;
+                >
                   确认收货
-                &lt;/van-button&gt;
-                &lt;van-button 
+                </van-button>
+                <van-button 
                   v-if="order.status === 'completed'"
                   size="small" 
                   @click.stop="buyAgain(order)"
-                &gt;
+                >
                   再次购买
-                &lt;/van-button&gt;
-                &lt;van-button 
+                </van-button>
+                <van-button 
                   v-if="order.status === 'cancelled'"
                   size="small" 
                   type="danger"
                   @click.stop="deleteOrder(order)"
-                &gt;
+                >
                   删除订单
-                &lt;/van-button&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+                </van-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
-&lt;script setup&gt;
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getOrders, saveOrders, saveCart } from '@/utils/storage'
@@ -233,9 +233,9 @@ const onClickLeft = () => {
 onMounted(() => {
   loadOrders()
 })
-&lt;/script&gt;
+</script>
 
-&lt;style scoped lang="scss"&gt;
+<style scoped lang="scss">
 .orders-page {
   min-height: 100vh;
   background-color: #f5f5f5;
@@ -344,4 +344,4 @@ onMounted(() => {
     gap: 8px;
   }
 }
-&lt;/style&gt;
+</style>

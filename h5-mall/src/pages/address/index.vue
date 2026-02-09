@@ -1,58 +1,58 @@
-&lt;template&gt;
-  &lt;div class="address-page"&gt;
-    &lt;van-nav-bar title="收货地址" left-arrow @click-left="onClickLeft" /&gt;
+<template>
+  <div class="address-page">
+    <van-nav-bar title="收货地址" left-arrow @click-left="onClickLeft" />
     
-    &lt;div class="address-content"&gt;
-      &lt;div v-if="addressList.length === 0" class="empty-address"&gt;
-        &lt;van-empty description="暂无收货地址" /&gt;
-      &lt;/div&gt;
+    <div class="address-content">
+      <div v-if="addressList.length === 0" class="empty-address">
+        <van-empty description="暂无收货地址" />
+      </div>
 
-      &lt;div v-else class="address-list"&gt;
-        &lt;van-swipe-cell v-for="address in addressList" :key="address.id" class="address-item"&gt;
-          &lt;div class="address-card" @click="selectAddress(address)"&gt;
-            &lt;div class="address-header"&gt;
-              &lt;span class="address-name"&gt;{{ address.name }}&lt;/span&gt;
-              &lt;span class="address-phone"&gt;{{ address.phone }}&lt;/span&gt;
-              &lt;van-tag v-if="address.is_default" type="success" size="small"&gt;默认&lt;/van-tag&gt;
-            &lt;/div&gt;
-            &lt;div class="address-detail"&gt;
+      <div v-else class="address-list">
+        <van-swipe-cell v-for="address in addressList" :key="address.id" class="address-item">
+          <div class="address-card" @click="selectAddress(address)">
+            <div class="address-header">
+              <span class="address-name">{{ address.name }}</span>
+              <span class="address-phone">{{ address.phone }}</span>
+              <van-tag v-if="address.is_default" type="success" size="small">默认</van-tag>
+            </div>
+            <div class="address-detail">
               {{ address.province }}{{ address.city }}{{ address.district }}{{ address.detail }}
-            &lt;/div&gt;
-            &lt;div class="address-actions"&gt;
-              &lt;van-button size="small" type="primary" plain @click.stop="editAddress(address)"&gt;
+            </div>
+            <div class="address-actions">
+              <van-button size="small" type="primary" plain @click.stop="editAddress(address)">
                 编辑
-              &lt;/van-button&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-          &lt;template #right&gt;
-            &lt;van-button square text="删除" type="danger" class="delete-button" @click="deleteAddress(address)" /&gt;
-          &lt;/template&gt;
-        &lt;/van-swipe-cell&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
+              </van-button>
+            </div>
+          </div>
+          <template #right>
+            <van-button square text="删除" type="danger" class="delete-button" @click="deleteAddress(address)" />
+          </template>
+        </van-swipe-cell>
+      </div>
+    </div>
 
-    &lt;div class="address-footer"&gt;
-      &lt;van-button type="success" block round @click="showAddForm"&gt;
+    <div class="address-footer">
+      <van-button type="success" block round @click="showAddForm">
         新增地址
-      &lt;/van-button&gt;
-    &lt;/div&gt;
+      </van-button>
+    </div>
 
-    &lt;van-popup v-model:show="showForm" position="bottom" round :style="{ height: '80%' }"&gt;
-      &lt;div class="form-header"&gt;
-        &lt;van-button type="primary" plain size="small" @click="closeForm"&gt;取消&lt;/van-button&gt;
-        &lt;span class="form-title"&gt;{{ isEdit ? '编辑地址' : '新增地址' }}&lt;/span&gt;
-        &lt;van-button type="primary" size="small" @click="saveAddress"&gt;保存&lt;/van-button&gt;
-      &lt;/div&gt;
-      &lt;van-form @submit="saveAddress"&gt;
-        &lt;van-cell-group inset&gt;
-          &lt;van-field
+    <van-popup v-model:show="showForm" position="bottom" round :style="{ height: '80%' }">
+      <div class="form-header">
+        <van-button type="primary" plain size="small" @click="closeForm">取消</van-button>
+        <span class="form-title">{{ isEdit ? '编辑地址' : '新增地址' }}</span>
+        <van-button type="primary" size="small" @click="saveAddress">保存</van-button>
+      </div>
+      <van-form @submit="saveAddress">
+        <van-cell-group inset>
+          <van-field
             v-model="formData.name"
             name="name"
             label="收货人"
             placeholder="请输入收货人姓名"
             :rules="[{ required: true, message: '请输入收货人姓名' }]"
-          /&gt;
-          &lt;van-field
+          />
+          <van-field
             v-model="formData.phone"
             name="phone"
             label="手机号"
@@ -60,29 +60,29 @@
             placeholder="请输入手机号"
             maxlength="11"
             :rules="[{ required: true, message: '请输入手机号' }]"
-          /&gt;
-          &lt;van-field
+          />
+          <van-field
             v-model="formData.province"
             name="province"
             label="省份"
             placeholder="请输入省份"
             :rules="[{ required: true, message: '请输入省份' }]"
-          /&gt;
-          &lt;van-field
+          />
+          <van-field
             v-model="formData.city"
             name="city"
             label="城市"
             placeholder="请输入城市"
             :rules="[{ required: true, message: '请输入城市' }]"
-          /&gt;
-          &lt;van-field
+          />
+          <van-field
             v-model="formData.district"
             name="district"
             label="区县"
             placeholder="请输入区县"
             :rules="[{ required: true, message: '请输入区县' }]"
-          /&gt;
-          &lt;van-field
+          />
+          <van-field
             v-model="formData.detail"
             name="detail"
             label="详细地址"
@@ -90,19 +90,19 @@
             placeholder="请输入详细地址"
             rows="2"
             :rules="[{ required: true, message: '请输入详细地址' }]"
-          /&gt;
-          &lt;van-cell center title="设为默认地址"&gt;
-            &lt;template #right-icon&gt;
-              &lt;van-switch v-model="formData.is_default" size="20" /&gt;
-            &lt;/template&gt;
-          &lt;/van-cell&gt;
-        &lt;/van-cell-group&gt;
-      &lt;/van-form&gt;
-    &lt;/van-popup&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+          />
+          <van-cell center title="设为默认地址">
+            <template #right-icon>
+              <van-switch v-model="formData.is_default" size="20" />
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-form>
+    </van-popup>
+  </div>
+</template>
 
-&lt;script setup&gt;
+<script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { getAddresses, saveAddresses } from '@/utils/storage'
@@ -250,9 +250,9 @@ const onClickLeft = () => {
 onMounted(() => {
   loadAddresses()
 })
-&lt;/script&gt;
+</script>
 
-&lt;style scoped lang="scss"&gt;
+<style scoped lang="scss">
 .address-page {
   min-height: 100vh;
   background-color: #f5f5f5;
@@ -340,4 +340,4 @@ onMounted(() => {
     font-weight: bold;
   }
 }
-&lt;/style&gt;
+</style>

@@ -1,44 +1,44 @@
-&lt;template&gt;
-  &lt;div class="payment-page"&gt;
-    &lt;van-nav-bar title="支付" left-arrow @click-left="onClickLeft" /&gt;
+<template>
+  <div class="payment-page">
+    <van-nav-bar title="支付" left-arrow @click-left="onClickLeft" />
     
-    &lt;div class="payment-content"&gt;
-      &lt;div v-if="!paymentSuccess" class="payment-form"&gt;
-        &lt;div class="amount-section"&gt;
-          &lt;div class="amount-label"&gt;支付金额&lt;/div&gt;
-          &lt;div class="amount-value"&gt;¥{{ orderAmount }}&lt;/div&gt;
-        &lt;/div&gt;
+    <div class="payment-content">
+      <div v-if="!paymentSuccess" class="payment-form">
+        <div class="amount-section">
+          <div class="amount-label">支付金额</div>
+          <div class="amount-value">¥{{ orderAmount }}</div>
+        </div>
 
-        &lt;van-cell-group inset class="payment-methods"&gt;
-          &lt;van-cell title="支付方式" /&gt;
-          &lt;van-radio-group v-model="paymentMethod"&gt;
-            &lt;van-cell clickable @click="paymentMethod = 'wechat'"&gt;
-              &lt;template #title&gt;
-                &lt;div class="method-item"&gt;
-                  &lt;van-icon name="wechat-pay" size="24" color="#07C160" /&gt;
-                  &lt;span class="method-name"&gt;微信支付&lt;/span&gt;
-                &lt;/div&gt;
-              &lt;/template&gt;
-              &lt;template #right-icon&gt;
-                &lt;van-radio name="wechat" /&gt;
-              &lt;/template&gt;
-            &lt;/van-cell&gt;
-            &lt;van-cell clickable @click="paymentMethod = 'alipay'"&gt;
-              &lt;template #title&gt;
-                &lt;div class="method-item"&gt;
-                  &lt;van-icon name="alipay" size="24" color="#1677FF" /&gt;
-                  &lt;span class="method-name"&gt;支付宝&lt;/span&gt;
-                &lt;/div&gt;
-              &lt;/template&gt;
-              &lt;template #right-icon&gt;
-                &lt;van-radio name="alipay" /&gt;
-              &lt;/template&gt;
-            &lt;/van-cell&gt;
-          &lt;/van-radio-group&gt;
-        &lt;/van-cell-group&gt;
+        <van-cell-group inset class="payment-methods">
+          <van-cell title="支付方式" />
+          <van-radio-group v-model="paymentMethod">
+            <van-cell clickable @click="paymentMethod = 'wechat'">
+              <template #title>
+                <div class="method-item">
+                  <van-icon name="wechat-pay" size="24" color="#07C160" />
+                  <span class="method-name">微信支付</span>
+                </div>
+              </template>
+              <template #right-icon>
+                <van-radio name="wechat" />
+              </template>
+            </van-cell>
+            <van-cell clickable @click="paymentMethod = 'alipay'">
+              <template #title>
+                <div class="method-item">
+                  <van-icon name="alipay" size="24" color="#1677FF" />
+                  <span class="method-name">支付宝</span>
+                </div>
+              </template>
+              <template #right-icon>
+                <van-radio name="alipay" />
+              </template>
+            </van-cell>
+          </van-radio-group>
+        </van-cell-group>
 
-        &lt;div class="payment-button-wrapper"&gt;
-          &lt;van-button 
+        <div class="payment-button-wrapper">
+          <van-button 
             type="success" 
             block 
             round 
@@ -46,36 +46,36 @@
             :loading="paying"
             loading-text="支付中..."
             @click="handlePayment"
-          &gt;
+          >
             立即支付
-          &lt;/van-button&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
+          </van-button>
+        </div>
+      </div>
 
-      &lt;div v-else class="payment-success"&gt;
-        &lt;van-result 
+      <div v-else class="payment-success">
+        <van-result 
           icon="success" 
           title="支付成功" 
           sub-title="订单已提交，等待发货"
-        &gt;
-          &lt;template #footer&gt;
-            &lt;van-button type="success" round @click="viewOrders"&gt;
+        >
+          <template #footer>
+            <van-button type="success" round @click="viewOrders">
               查看订单
-            &lt;/van-button&gt;
-          &lt;/template&gt;
-        &lt;/van-result&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
+            </van-button>
+          </template>
+        </van-result>
+      </div>
+    </div>
 
-    &lt;van-overlay :show="paying"&gt;
-      &lt;div class="loading-wrapper"&gt;
-        &lt;van-loading size="24px" vertical&gt;支付中...&lt;/van-loading&gt;
-      &lt;/div&gt;
-    &lt;/van-overlay&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+    <van-overlay :show="paying">
+      <div class="loading-wrapper">
+        <van-loading size="24px" vertical>支付中...</van-loading>
+      </div>
+    </van-overlay>
+  </div>
+</template>
 
-&lt;script setup&gt;
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { getOrders, saveOrders } from '@/utils/storage'
@@ -155,9 +155,9 @@ const onClickLeft = () => {
 onMounted(() => {
   loadOrder()
 })
-&lt;/script&gt;
+</script>
 
-&lt;style scoped lang="scss"&gt;
+<style scoped lang="scss">
 .payment-page {
   min-height: 100vh;
   background-color: #f5f5f5;
@@ -219,4 +219,4 @@ onMounted(() => {
   justify-content: center;
   height: 100%;
 }
-&lt;/style&gt;
+</style>

@@ -1,51 +1,51 @@
-&lt;template&gt;
-  &lt;div class="profile-page"&gt;
-    &lt;div class="profile-header"&gt;
-      &lt;div class="user-info" @click="handleUserInfoClick"&gt;
-        &lt;van-image
+<template>
+  <div class="profile-page">
+    <div class="profile-header">
+      <div class="user-info" @click="handleUserInfoClick">
+        <van-image
           round
           width="64"
           height="64"
           :src="user ? user.avatar : 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'"
           class="avatar"
-        /&gt;
-        &lt;div class="user-details"&gt;
-          &lt;div class="user-name"&gt;{{ user ? user.nickname : '点击登录' }}&lt;/div&gt;
-          &lt;div class="user-phone"&gt;{{ user ? user.phone : '' }}&lt;/div&gt;
-        &lt;/div&gt;
-        &lt;van-icon name="arrow" class="arrow-icon" /&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
+        />
+        <div class="user-details">
+          <div class="user-name">{{ user ? user.nickname : '点击登录' }}</div>
+          <div class="user-phone">{{ user ? user.phone : '' }}</div>
+        </div>
+        <van-icon name="arrow" class="arrow-icon" />
+      </div>
+    </div>
 
-    &lt;div v-if="user" class="profile-content"&gt;
-      &lt;van-cell-group inset class="order-section"&gt;
-        &lt;div class="section-header"&gt;
-          &lt;span class="section-title"&gt;我的订单&lt;/span&gt;
-          &lt;van-cell is-link title="全部订单" value="查看全部" @click="goToOrders('all')" /&gt;
-        &lt;/div&gt;
-        &lt;van-grid :column-num="4" :border="false" class="order-grid"&gt;
-          &lt;van-grid-item icon="pending-payment" text="待付款" :badge="orderCounts.pending_payment || null" @click="goToOrders('pending_payment')" /&gt;
-          &lt;van-grid-item icon="logistics" text="待发货" :badge="orderCounts.pending_shipment || null" @click="goToOrders('pending_shipment')" /&gt;
-          &lt;van-grid-item icon="sign" text="待收货" :badge="orderCounts.pending_receipt || null" @click="goToOrders('pending_receipt')" /&gt;
-          &lt;van-grid-item icon="completed" text="已完成" :badge="orderCounts.completed || null" @click="goToOrders('completed')" /&gt;
-        &lt;/van-grid&gt;
-      &lt;/van-cell-group&gt;
+    <div v-if="user" class="profile-content">
+      <van-cell-group inset class="order-section">
+        <div class="section-header">
+          <span class="section-title">我的订单</span>
+          <van-cell is-link title="全部订单" value="查看全部" @click="goToOrders('all')" />
+        </div>
+        <van-grid :column-num="4" :border="false" class="order-grid">
+          <van-grid-item icon="pending-payment" text="待付款" :badge="orderCounts.pending_payment || null" @click="goToOrders('pending_payment')" />
+          <van-grid-item icon="logistics" text="待发货" :badge="orderCounts.pending_shipment || null" @click="goToOrders('pending_shipment')" />
+          <van-grid-item icon="sign" text="待收货" :badge="orderCounts.pending_receipt || null" @click="goToOrders('pending_receipt')" />
+          <van-grid-item icon="completed" text="已完成" :badge="orderCounts.completed || null" @click="goToOrders('completed')" />
+        </van-grid>
+      </van-cell-group>
 
-      &lt;van-cell-group inset class="menu-section"&gt;
-        &lt;van-cell title="收货地址" is-link @click="goToAddress" /&gt;
-        &lt;van-cell title="关于我们" is-link @click="showAbout" /&gt;
-      &lt;/van-cell-group&gt;
+      <van-cell-group inset class="menu-section">
+        <van-cell title="收货地址" is-link @click="goToAddress" />
+        <van-cell title="关于我们" is-link @click="showAbout" />
+      </van-cell-group>
 
-      &lt;div class="logout-section"&gt;
-        &lt;van-button type="danger" block round @click="handleLogout"&gt;
+      <div class="logout-section">
+        <van-button type="danger" block round @click="handleLogout">
           退出登录
-        &lt;/van-button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+        </van-button>
+      </div>
+    </div>
+  </div>
+</template>
 
-&lt;script setup&gt;
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getUser, saveUser, getOrders } from '@/utils/storage'
@@ -135,9 +135,9 @@ onMounted(() => {
   loadUserInfo()
   loadOrders()
 })
-&lt;/script&gt;
+</script>
 
-&lt;style scoped lang="scss"&gt;
+<style scoped lang="scss">
 .profile-page {
   min-height: 100vh;
   background-color: #f5f5f5;
@@ -208,4 +208,4 @@ onMounted(() => {
 .logout-section {
   padding: 20px 12px;
 }
-&lt;/style&gt;
+</style>

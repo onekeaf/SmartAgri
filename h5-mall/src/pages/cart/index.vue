@@ -1,61 +1,61 @@
-&lt;template&gt;
-  &lt;div class="cart-page"&gt;
-    &lt;van-nav-bar title="购物车" left-arrow @click-left="onClickLeft" /&gt;
+<template>
+  <div class="cart-page">
+    <van-nav-bar title="购物车" left-arrow @click-left="onClickLeft" />
     
-    &lt;div class="cart-content"&gt;
-      &lt;div v-if="cartList.length === 0" class="empty-cart"&gt;
-        &lt;van-empty description="购物车空空如也"&gt;
-          &lt;van-button round type="success" class="bottom-button" @click="goToMall"&gt;
+    <div class="cart-content">
+      <div v-if="cartList.length === 0" class="empty-cart">
+        <van-empty description="购物车空空如也">
+          <van-button round type="success" class="bottom-button" @click="goToMall">
             去逛逛
-          &lt;/van-button&gt;
-        &lt;/van-empty&gt;
-      &lt;/div&gt;
+          </van-button>
+        </van-empty>
+      </div>
       
-      &lt;div v-else class="cart-list"&gt;
-        &lt;van-swipe-cell v-for="item in cartList" :key="item.product_id" class="cart-item"&gt;
-          &lt;van-checkbox-group v-model="item.checked" @change="onItemCheck"&gt;
-            &lt;div class="item-content"&gt;
-              &lt;van-checkbox :name="item.checked" shape="square" /&gt;
-              &lt;img :src="item.image" :alt="item.product_name" class="product-image" /&gt;
-              &lt;div class="product-info"&gt;
-                &lt;div class="product-name"&gt;{{ item.product_name }}&lt;/div&gt;
-                &lt;div class="product-spec"&gt;{{ item.specification }}&lt;/div&gt;
-                &lt;div class="product-bottom"&gt;
-                  &lt;span class="price"&gt;¥{{ item.price }}&lt;/span&gt;
-                  &lt;van-stepper 
+      <div v-else class="cart-list">
+        <van-swipe-cell v-for="item in cartList" :key="item.product_id" class="cart-item">
+          <van-checkbox-group v-model="item.checked" @change="onItemCheck">
+            <div class="item-content">
+              <van-checkbox :name="item.checked" shape="square" />
+              <img :src="item.image" :alt="item.product_name" class="product-image" />
+              <div class="product-info">
+                <div class="product-name">{{ item.product_name }}</div>
+                <div class="product-spec">{{ item.specification }}</div>
+                <div class="product-bottom">
+                  <span class="price">¥{{ item.price }}</span>
+                  <van-stepper 
                     v-model="item.quantity" 
                     :min="1" 
                     :max="item.stock" 
                     @change="onQuantityChange(item)"
-                  /&gt;
-                &lt;/div&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-          &lt;/van-checkbox-group&gt;
-          &lt;template #right&gt;
-            &lt;van-button square text="删除" type="danger" class="delete-button" @click="deleteItem(item)" /&gt;
-          &lt;/template&gt;
-        &lt;/van-swipe-cell&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
+                  />
+                </div>
+              </div>
+            </div>
+          </van-checkbox-group>
+          <template #right>
+            <van-button square text="删除" type="danger" class="delete-button" @click="deleteItem(item)" />
+          </template>
+        </van-swipe-cell>
+      </div>
+    </div>
     
-    &lt;div v-if="cartList.length > 0" class="cart-footer"&gt;
-      &lt;van-checkbox v-model="selectAll" shape="square" @change="onSelectAll"&gt;
+    <div v-if="cartList.length > 0" class="cart-footer">
+      <van-checkbox v-model="selectAll" shape="square" @change="onSelectAll">
         全选
-      &lt;/van-checkbox&gt;
-      &lt;div class="footer-right"&gt;
-        &lt;div class="total-price"&gt;
-          合计：&lt;span class="price"&gt;¥{{ totalPrice }}&lt;/span&gt;
-        &lt;/div&gt;
-        &lt;van-button type="success" round @click="goToCheckout"&gt;
+      </van-checkbox>
+      <div class="footer-right">
+        <div class="total-price">
+          合计：<span class="price">¥{{ totalPrice }}</span>
+        </div>
+        <van-button type="success" round @click="goToCheckout">
           结算({{ checkedCount }})
-        &lt;/van-button&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+        </van-button>
+      </div>
+    </div>
+  </div>
+</template>
 
-&lt;script setup&gt;
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getCart, saveCart } from '@/utils/storage'
@@ -134,9 +134,9 @@ const onClickLeft = () => {
 onMounted(() => {
   loadCart()
 })
-&lt;/script&gt;
+</script>
 
-&lt;style scoped lang="scss"&gt;
+<style scoped lang="scss">
 .cart-page {
   min-height: 100vh;
   background-color: #f5f5f5;
@@ -246,4 +246,4 @@ onMounted(() => {
     }
   }
 }
-&lt;/style&gt;
+</style>
