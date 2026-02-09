@@ -1,0 +1,117 @@
+<view class="container {{dataType}}">
+  <!-- 标题区域 -->
+  <view class="header">
+    <view class="header-title">{{pageTitle}}</view>
+    <view class="header-desc">显示最近100条数据</view>
+    <view class="update-time">最后更新: {{lastUpdateTime}}</view>
+  </view>
+
+  <!-- 数据摘要 -->
+  <view class="data-summary" wx:if="{{dataType !== 'air'}}">
+    <view class="summary-item">
+      <view class="summary-label">平均值</view>
+      <view class="summary-value">{{avgValue}}{{unit}}</view>
+    </view>
+    <view class="summary-item">
+      <view class="summary-label">最大值</view>
+      <view class="summary-value">{{maxValue}}{{unit}}</view>
+    </view>
+    <view class="summary-item">
+      <view class="summary-label">最小值</view>
+      <view class="summary-value">{{minValue}}{{unit}}</view>
+    </view>
+  </view>
+
+  <!-- 空气温湿度专用摘要 -->
+  <view class="data-summary" wx:if="{{dataType === 'air'}}">
+    <view class="summary-item">
+      <view class="summary-label">温度均值</view>
+      <view class="summary-value temperature">{{avgValue}}°C</view>
+    </view>
+    <view class="summary-item">
+      <view class="summary-label">温度最大</view>
+      <view class="summary-value temperature">{{maxValue}}°C</view>
+    </view>
+    <view class="summary-item">
+      <view class="summary-label">温度最小</view>
+      <view class="summary-value temperature">{{minValue}}°C</view>
+    </view>
+  </view>
+
+  <!-- 湿度摘要（仅对空气数据） -->
+  <view class="data-summary humidity-summary" wx:if="{{dataType === 'air'}}">
+    <view class="summary-item">
+      <view class="summary-label">湿度均值</view>
+      <view class="summary-value humidity">{{humidityAvg}}%</view>
+    </view>
+    <view class="summary-item">
+      <view class="summary-label">湿度最大</view>
+      <view class="summary-value humidity">{{humidityMax}}%</view>
+    </view>
+    <view class="summary-item">
+      <view class="summary-label">湿度最小</view>
+      <view class="summary-value humidity">{{humidityMin}}%</view>
+    </view>
+  </view>
+
+  <!-- 二氧化碳摘要（仅对空气数据） -->
+  <view class="data-summary co2-summary" wx:if="{{dataType === 'air'}}">
+    <view class="summary-item">
+      <view class="summary-label">CO₂均值</view>
+      <view class="summary-value co2">{{co2Avg}}ppm</view>
+    </view>
+    <view class="summary-item">
+      <view class="summary-label">CO₂最大</view>
+      <view class="summary-value co2">{{co2Max}}ppm</view>
+    </view>
+    <view class="summary-item">
+      <view class="summary-label">CO₂最小</view>
+      <view class="summary-value co2">{{co2Min}}ppm</view>
+    </view>
+  </view>
+
+  <!-- 图表区域 -->
+  <view class="chart-container">
+    <view class="chart-title">温湿度变化趋势图</view>
+    <view class="chart-loading" wx:if="{{loading}}">
+      <view class="loading-icon">📊</view>
+      <view class="loading-text">图表加载中...</view>
+    </view>
+    <view class="no-data" wx:elif="{{!hasData}}">
+      <view class="no-data-icon">📈</view>
+      <view class="no-data-text">暂无数据</view>
+    </view>
+    <canvas wx:else canvas-id="dataChart" id="dataChart" class="chart-canvas" type="2d"></canvas>
+  </view>
+    
+  <!-- 二氧化碳单独图表 (只在空气数据页面显示) -->
+  <view class="chart-container" wx:if="{{dataType === 'air' && hasData && !loading}}">
+    <view class="chart-title co2-chart-title">二氧化碳浓度趋势图</view>
+    <canvas canvas-id="co2Chart" id="co2Chart" class="chart-canvas" type="2d"></canvas>
+  </view>
+
+  <!-- 数据记录列表 -->
+  <view class="data-records">
+    <view class="records-title">近期数据记录</view>
+    <view class="records-list">
+      <block wx:if="{{dataType === 'air'}}">
+        <view wx:for="{{dataRecords}}" wx:key="timestamp" class="record-item">
+          <view class="record-time">{{item.formattedTime}}</view>
+          <view class="record-values">
+            <view class="record-value temperature">温度: {{item.temperature}}°C</view>
+            <view class="record-value humidity">湿度: {{item.humidity}}%</view>
+            <view class="record-value co2">CO₂: {{item.co2}}ppm</view>
+          </view>
+        </view>
+      </block>
+      <block wx:else>
+        <view wx:for="{{dataRecords}}" wx:key="timestamp" class="record-item">
+          <view class="record-time">{{item.formattedTime}}</view>
+          <view class="record-values">
+            <view class="record-value {{dataType}}">{{dataType === 'soil' ? '湿度' : '光照强度'}}: {{item.value}}{{unit}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view> 

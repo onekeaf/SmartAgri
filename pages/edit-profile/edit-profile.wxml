@@ -1,0 +1,35 @@
+<view class="container">
+  <view class="form">
+    <view class="section-title">编辑个人信息</view>
+    
+    <view class="input-group">
+      <view class="input-label">用户名</view>
+      <input type="text" value="{{userInfo.username}}" bindinput="onUsernameInput" placeholder="请输入用户名" />
+    </view>
+    
+    <view class="input-group">
+      <view class="input-label">邮箱</view>
+      <input type="text" value="{{userInfo.email}}" bindinput="onEmailInput" placeholder="请输入邮箱" />
+    </view>
+    
+    <view class="input-group">
+      <view class="input-label">头像URL</view>
+      <input type="text" value="{{userInfo.avatar_url}}" bindinput="onAvatarInput" placeholder="请输入头像URL" />
+    </view>
+    
+    <view class="input-group">
+      <view class="input-label">部门</view>
+      <input type="text" value="{{userInfo.department}}" bindinput="onDepartmentInput" placeholder="请输入部门" />
+    </view>
+    
+    <view class="input-group">
+      <view class="input-label">职位</view>
+      <input type="text" value="{{userInfo.position}}" bindinput="onPositionInput" placeholder="请输入职位" />
+    </view>
+    
+    <view class="btn-group">
+      <button class="btn-cancel" bindtap="cancelEdit">取消</button>
+      <button class="btn-save" bindtap="saveUserInfo">保存</button>
+    </view>
+  </view>
+</view> 

@@ -1,0 +1,171 @@
+<!--pages/ssaa/ssaa.wxml-->
+<view class="page-container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="header-title">超级智能农业代理</view>
+    <view class="header-subtitle">SSAA · 全自动农场管理系统</view>
+  </view>
+  
+  <!-- 选项卡 -->
+  <view class="tabs">
+    <view class="tab {{activeTab === 'inspections' ? 'active' : ''}}" bindtap="switchTab" data-tab="inspections">
+      检查记录
+    </view>
+    <view class="tab {{activeTab === 'actions' ? 'active' : ''}}" bindtap="switchTab" data-tab="actions">
+      操作日志
+    </view>
+  </view>
+  
+  <!-- 筛选条件 -->
+  <view class="filter-container">
+    <view class="filter-item">
+      <picker mode="date" value="{{startDate}}" start="2020-01-01" end="{{endDate || currentDate}}" bindchange="onStartDateChange">
+        <view class="picker">
+          <text class="label">开始日期:</text>
+          <text class="value">{{startDate || '选择日期'}}</text>
+        </view>
+      </picker>
+    </view>
+    <view class="filter-item">
+      <picker mode="date" value="{{endDate}}" start="{{startDate || '2020-01-01'}}" end="{{currentDate}}" bindchange="onEndDateChange">
+        <view class="picker">
+          <text class="label">结束日期:</text>
+          <text class="value">{{endDate || '选择日期'}}</text>
+        </view>
+      </picker>
+    </view>
+    <view class="filter-actions">
+      <view class="filter-btn" bindtap="resetFilter">重置</view>
+      <view class="filter-btn primary" bindtap="applyFilter">筛选</view>
+    </view>
+  </view>
+  
+  <!-- 内容区域 - 使用scroll-view包装 -->
+  <scroll-view class="scroll-container" scroll-y="true" enable-back-to-top="true">
+    <!-- 检查记录内容 -->
+    <view class="content-container" wx:if="{{activeTab === 'inspections'}}">
+      <view class="inspection-list">
+        <block wx:if="{{inspections.length > 0}}">
+          <view class="inspection-item" wx:for="{{inspections}}" wx:key="record_id" bindtap="showInspectionDetail" data-record="{{item}}">
+            <view class="inspection-header">
+              <view class="inspection-time">{{item.inspection_time}}</view>
+              <view class="next-inspection">下次检查: {{item.next_inspection_time}}</view>
+            </view>
+            <view class="inspection-summary">
+              <view class="summary-item">
+                <view class="summary-icon environment">🌡️</view>
+                <view class="summary-text">{{item.environment_analysis}}</view>
+              </view>
+              <view class="summary-item">
+                <view class="summary-icon devices">⚙️</view>
+                <view class="summary-text">{{item.devices_analysis}}</view>
+              </view>
+            </view>
+            <view class="inspection-actions">
+              <view class="action-count">{{item.actions_taken.length}}个操作</view>
+              <view class="view-detail">查看详情 ></view>
+            </view>
+          </view>
+        </block>
+        <view class="empty-state" wx:else>
+          <view class="empty-icon">📊</view>
+          <view class="empty-text">暂无检查记录</view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 操作日志内容 -->
+    <view class="content-container" wx:if="{{activeTab === 'actions'}}">
+      <view class="action-list">
+        <block wx:if="{{actionLogs.length > 0}}">
+          <view class="action-item {{item.success ? 'success' : 'failed'}}" wx:for="{{actionLogs}}" wx:key="log_id">
+            <view class="action-header">
+              <view class="action-time">{{item.action_time}}</view>
+              <view class="action-status {{item.success ? 'success' : 'failed'}}">
+                {{item.success ? '成功' : '失败'}}
+              </view>
+            </view>
+            <view class="action-content">
+              <view class="action-type">{{item.action_type_cn}}</view>
+              <view class="action-detail">{{item.action_details.result}}</view>
+            </view>
+            <view class="device-tag" wx:if="{{item.action_details.device_type}}">
+              {{item.action_details.device_type}}
+            </view>
+          </view>
+        </block>
+        <view class="empty-state" wx:else>
+          <view class="empty-icon">📝</view>
+          <view class="empty-text">暂无操作日志</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 添加底部空白区域，确保内容不被分页控制遮挡 -->
+    <view class="bottom-space"></view>
+  </scroll-view>
+  
+  <!-- 分页控制 -->
+  <view class="pagination" wx:if="{{totalPages > 1}}">
+    <view class="page-btn prev {{currentPage <= 1 ? 'disabled' : ''}}" bindtap="prevPage">
+      上一页
+    </view>
+    <view class="page-info">{{currentPage}}/{{totalPages}}</view>
+    <view class="page-btn next {{currentPage >= totalPages ? 'disabled' : ''}}" bindtap="nextPage">
+      下一页
+    </view>
+  </view>
+  
+  <!-- 加载中提示 -->
+  <view class="loading-container" wx:if="{{isLoading}}">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">加载中...</view>
+  </view>
+</view>
+
+<!-- 检查记录详情弹窗 -->
+<view class="detail-modal {{showDetailModal ? 'show' : ''}}" wx:if="{{selectedInspection}}">
+  <view class="modal-mask" bindtap="hideDetailModal"></view>
+  <view class="modal-content">
+    <view class="modal-header">
+      <view class="modal-title">检查详情</view>
+      <view class="modal-close" bindtap="hideDetailModal">×</view>
+    </view>
+    <scroll-view class="modal-body" scroll-y>
+      <view class="detail-section">
+        <view class="detail-title">检查时间</view>
+        <view class="detail-content">{{selectedInspection.inspection_time}}</view>
+      </view>
+      <view class="detail-section">
+        <view class="detail-title">环境分析</view>
+        <view class="detail-content">{{selectedInspection.environment_analysis}}</view>
+      </view>
+      <view class="detail-section">
+        <view class="detail-title">设备分析</view>
+        <view class="detail-content">{{selectedInspection.devices_analysis}}</view>
+      </view>
+      <view class="detail-section">
+        <view class="detail-title">天气分析</view>
+        <view class="detail-content">{{selectedInspection.weather_analysis}}</view>
+      </view>
+      <view class="detail-section">
+        <view class="detail-title">综合分析</view>
+        <view class="detail-content">{{selectedInspection.comprehensive_analysis}}</view>
+      </view>
+      <view class="detail-section" wx:if="{{selectedInspection.actions_taken.length > 0}}">
+        <view class="detail-title">执行的操作</view>
+        <view class="actions-list">
+          <view class="action-item-detail" wx:for="{{selectedInspection.actions_taken}}" wx:key="index">
+            <view class="action-item-header">
+              <view class="action-device">{{item.device_type}}</view>
+              <view class="action-status {{item.success ? 'success' : 'failed'}}">
+                {{item.success ? '成功' : '失败'}}
+              </view>
+            </view>
+            <view class="action-item-content">{{item.result}}</view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

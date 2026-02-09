@@ -1,0 +1,124 @@
+<view class="page-container">
+  <!-- 头部区域 -->
+  <view class="header">
+    <view class="header-title">设备管理</view>
+    <view class="header-subtitle">智能控制 · 实时监控</view>
+  </view>
+  
+  <!-- 最后更新时间显示框 -->
+  <view class="update-time-container">
+    <view class="update-time-text">数据上次更新时间：{{lastUpdateTime}}</view>
+  </view>
+  
+  <!-- 刷新按钮 -->
+  <view class="big-refresh-button-container">
+    <view class="big-refresh-button {{isRefreshing ? 'refreshing' : ''}}" bindtap="refreshData">
+      <text class="big-refresh-icon">🔄</text>
+      <text class="big-refresh-text">点击刷新数据</text>
+    </view>
+  </view>
+
+  <scroll-view class="scrollarea" scroll-y type="list">
+    <!-- 设备管理卡片 -->
+    <view class="card device-card">
+      <view class="card-header">
+        <view class="card-title">设备控制</view>
+      </view>
+      <view class="card-content">
+        <!-- 风扇控制 -->
+        <view class="device-item">
+          <view class="device-info">
+            <view class="device-icon">🌀</view>
+            <view class="device-name">风扇</view>
+            <view class="device-status {{fanStatus === 1 ? 'active' : ''}}">
+              {{fanStatus === 1 ? '运行中' : '已关闭'}}
+            </view>
+          </view>
+          <view class="device-control">
+            <switch color="#4CAF50" checked="{{fanStatus === 1}}" bindchange="toggleFan" />
+          </view>
+        </view>
+        <view class="device-controls" wx:if="{{fanStatus === 1}}">
+          <view class="level-selector">
+            <view class="level-text">档位：{{fanLevel}}</view>
+            <slider min="1" max="3" value="{{fanLevel}}" activeColor="#4CAF50" block-size="18" block-color="#4CAF50" bindchange="changeFanLevel" />
+          </view>
+          <view class="auto-mode-container">
+            <view class="auto-mode-label">自动模式</view>
+            <switch color="#4CAF50" checked="{{fanAutoMode === 1}}" bindchange="toggleFanAutoMode" />
+          </view>
+        </view>
+        <view class="device-history-btn" bindtap="viewDeviceHistory" data-device="fan">
+          <text>查看历史记录</text>
+        </view>
+
+        <!-- 灌溉设备控制 -->
+        <view class="device-item">
+          <view class="device-info">
+            <view class="device-icon">💦</view>
+            <view class="device-name">灌溉设备</view>
+            <view class="device-status {{irrigationStatus === 1 ? 'active' : ''}}">
+              {{irrigationStatus === 1 ? '运行中' : '已关闭'}}
+            </view>
+          </view>
+          <view class="device-control">
+            <switch color="#4CAF50" checked="{{irrigationStatus === 1}}" bindchange="toggleIrrigation" />
+          </view>
+        </view>
+        <view class="device-controls" wx:if="{{irrigationStatus === 1}}">
+          <view class="level-selector">
+            <view class="level-text">档位：{{irrigationLevel}}</view>
+            <slider min="1" max="3" value="{{irrigationLevel}}" activeColor="#4CAF50" block-size="18" block-color="#4CAF50" bindchange="changeIrrigationLevel" />
+          </view>
+          <view class="auto-mode-container">
+            <view class="auto-mode-label">自动模式</view>
+            <switch color="#4CAF50" checked="{{irrigationAutoMode === 1}}" bindchange="toggleIrrigationAutoMode" />
+          </view>
+        </view>
+        <view class="device-history-btn" bindtap="viewDeviceHistory" data-device="irrigation">
+          <text>查看历史记录</text>
+        </view>
+
+        <!-- 三色灯控制 -->
+        <view class="device-item">
+          <view class="device-info">
+            <view class="device-icon">🚦</view>
+            <view class="device-name">光照设备</view>
+            <view class="device-status {{redLight === 1 || yellowLight === 1 || greenLight === 1 ? 'active' : ''}}">
+              {{redLight === 1 || yellowLight === 1 || greenLight === 1 ? '运行中' : '已关闭'}}
+            </view>
+          </view>
+        </view>
+        <view class="traffic-light-container">
+          <view class="traffic-light-row">
+            <view class="traffic-light-label red-light">
+              <text>红灯</text>
+            </view>
+            <view class="traffic-light-switch">
+              <switch color="#e53935" checked="{{redLight === 1}}" bindchange="toggleRedLight" />
+            </view>
+          </view>
+          <view class="traffic-light-row">
+            <view class="traffic-light-label yellow-light">
+              <text>黄灯</text>
+            </view>
+            <view class="traffic-light-switch">
+              <switch color="#fdd835" checked="{{yellowLight === 1}}" bindchange="toggleYellowLight" />
+            </view>
+          </view>
+          <view class="traffic-light-row">
+            <view class="traffic-light-label green-light">
+              <text>绿灯</text>
+            </view>
+            <view class="traffic-light-switch">
+              <switch color="#43a047" checked="{{greenLight === 1}}" bindchange="toggleGreenLight" />
+            </view>
+          </view>
+        </view>
+        <view class="device-history-btn" bindtap="viewDeviceHistory" data-device="light">
+          <text>查看历史记录</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view> 

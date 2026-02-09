@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="title">用户注册</view>
+  <view class="form">
+    <view class="input-group">
+      <input type="text" placeholder="请输入用户名" bindinput="onUsernameInput" />
+    </view>
+    <view class="input-group">
+      <input type="text" placeholder="请输入手机号" bindinput="onPhoneInput" />
+    </view>
+    <view class="input-group">
+      <input type="password" placeholder="请输入密码" bindinput="onPasswordInput" />
+    </view>
+    <view class="input-group">
+      <input type="password" placeholder="请确认密码" bindinput="onConfirmPasswordInput" />
+    </view>
+    <view class="input-group">
+      <input type="text" placeholder="请输入邮箱（选填）" bindinput="onEmailInput" />
+    </view>
+    <view class="input-group">
+      <input type="text" placeholder="请输入部门（选填）" bindinput="onDepartmentInput" />
+    </view>
+    <view class="input-group">
+      <input type="text" placeholder="请输入职位（选填）" bindinput="onPositionInput" />
+    </view>
+    <button class="register-btn" bindtap="handleRegister">注册</button>
+    <view class="login-link" bindtap="goToLogin">
+      已有账号？立即登录
+    </view>
+  </view>
+</view> 

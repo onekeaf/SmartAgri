@@ -1,0 +1,102 @@
+/* device-selector.wxss */
+.page-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 导航栏样式 */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.nav-back {
+  width: 50px;
+  padding: 8px 0;
+}
+
+.back-icon {
+  font-size: 22px;
+  color: #333;
+}
+
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.nav-placeholder {
+  width: 50px;
+}
+
+/* 设备列表样式 */
+.device-list {
+  flex: 1;
+  padding: 20px 16px;
+}
+
+.intro-text {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.device-item {
+  background-color: #ffffff;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.device-item:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.device-icon {
+  font-size: 28px;
+  margin-right: 16px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f8ff;
+  border-radius: 50%;
+}
+
+.device-info {
+  flex: 1;
+}
+
+.device-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.device-desc {
+  font-size: 14px;
+  color: #666;
+}
+
+.device-arrow {
+  color: #999;
+  font-size: 18px;
+  margin-left: 8px;
+} 

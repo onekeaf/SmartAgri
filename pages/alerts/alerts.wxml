@@ -1,0 +1,72 @@
+<view class="container">
+  <view class="title-section">
+    <view class="title-box">
+      <view class="title-text">智能提醒历史</view>
+      <view class="subtitle-text">环境监测和设备管理提醒</view>
+    </view>
+  </view>
+
+  <!-- 筛选下拉菜单 -->
+  <view class="filter-dropdown">
+    <view class="filter-selected" bindtap="toggleDropdown">
+      <text>{{filterNames[activeFilter]}}</text>
+      <view class="dropdown-arrow {{isDropdownOpen ? 'open' : ''}}"></view>
+    </view>
+    
+    <!-- 下拉菜单内容 -->
+    <view class="dropdown-content {{isDropdownOpen ? 'show' : ''}}">
+      <view class="dropdown-item {{activeFilter === 'all' ? 'active' : ''}}" 
+            bindtap="setFilter" data-type="all">所有</view>
+      <view class="dropdown-item {{activeFilter === 'soil' ? 'active' : ''}}" 
+            bindtap="setFilter" data-type="soil">土壤</view>
+      <view class="dropdown-item {{activeFilter === 'temperature' ? 'active' : ''}}" 
+            bindtap="setFilter" data-type="temperature">温度</view>
+      <view class="dropdown-item {{activeFilter === 'humidity' ? 'active' : ''}}" 
+            bindtap="setFilter" data-type="humidity">湿度</view>
+      <view class="dropdown-item {{activeFilter === 'co2' ? 'active' : ''}}" 
+            bindtap="setFilter" data-type="co2">CO₂</view>
+      <view class="dropdown-item {{activeFilter === 'light' ? 'active' : ''}}" 
+            bindtap="setFilter" data-type="light">光照</view>
+    </view>
+  </view>
+
+  <!-- 提醒列表 -->
+  <view class="alerts-list" wx:if="{{filteredAlerts.length > 0}}">
+    <view wx:for="{{filteredAlerts}}" wx:key="id" class="alert-item {{item.type}}">
+      <view class="alert-checkbox" catchtap="toggleSelect" data-id="{{item.id}}">
+        <view class="checkbox {{selectedAlerts[item.id] ? 'checked' : ''}}"></view>
+      </view>
+      <view class="alert-icon">{{item.icon}}</view>
+      <view class="alert-content">
+        <view class="alert-title">{{item.title}}</view>
+        <view class="alert-message">{{item.message}}</view>
+        <view class="alert-time">{{item.time}}</view>
+        <!-- 一键解决按钮 -->
+        <view class="solve-btn" catchtap="quickSolveAlert" data-alert="{{item}}">
+          <view class="solve-icon">🤖</view>
+          <view class="solve-text">一键解决</view>
+        </view>
+      </view>
+      <view class="alert-delete" catchtap="deleteAlert" data-id="{{item.id}}">
+        <view class="delete-icon">×</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 无提醒时显示 -->
+  <view class="no-alerts" wx:else>
+    <view class="no-alerts-icon">✓</view>
+    <view class="no-alerts-text">暂无提醒记录</view>
+    <view class="no-alerts-desc">当监测到环境参数{{activeFilter !== 'all' ? '(' + filterNames[activeFilter] + ')' : ''}}异常时，将在此显示提醒</view>
+  </view>
+
+  <!-- 底部操作区 -->
+  <view class="footer-actions" wx:if="{{filteredAlerts.length > 0}}">
+    <view class="select-all" bindtap="toggleSelectAll">
+      <view class="checkbox {{isAllSelected ? 'checked' : ''}}"></view>
+      <text>全选</text>
+    </view>
+    <view class="delete-selected {{hasSelected ? 'active' : ''}}" bindtap="deleteSelected">删除选中({{selectedCount}})</view>
+    <view class="clear-button" bindtap="clearAlerts">清空全部</view>
+  </view>
+</view> 
