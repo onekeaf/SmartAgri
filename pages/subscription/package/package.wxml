@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="title">智慧农业系统订阅</view>
+  
+  <view class="package-card" bindtap="goToPay" data-type="month">
+    <view class="h3">月度订阅</view>
+    <view class="p">￥39/月 · 解锁全部监控功能 · 基础设备控制</view>
+    <button class="btn">立即订阅</button>
+  </view>
+  
+  <view class="package-card" bindtap="goToPay" data-type="quarter">
+    <view class="h3">季度订阅</view>
+    <view class="p">￥99/季 · 解锁全部功能 · 优先技术支持</view>
+    <button class="btn">立即订阅</button>
+  </view>
+  
+  <view class="package-card" bindtap="goToPay" data-type="year">
+    <view class="h3">年度订阅</view>
+    <view class="p">￥299/年 · 终身解锁 · 专属AI助手 · 全套服务</view>
+    <button class="btn">立即订阅</button>
+  </view>
+</view>

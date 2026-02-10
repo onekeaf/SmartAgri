@@ -14,7 +14,10 @@
     "pages/device/device",
     "pages/ssaa/ssaa",
     "pages/mall/index/index",
-    "pages/mall/edit-product/edit-product"
+    "pages/mall/edit-product/edit-product",
+    "pages/subscription/package/package",
+    "pages/subscription/pay/pay",
+    "pages/subscription/success/success"
   ],
   "window": {
     "backgroundTextStyle": "light",

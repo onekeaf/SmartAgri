@@ -1,0 +1,36 @@
+page {
+  background-color: #f5f5f5;
+  padding: 20px;
+  text-align: center;
+  margin-top: 50px;
+  box-sizing: border-box;
+}
+
+.icon {
+  font-size: 60px;
+  color: #52C41A;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.desc {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.btn {
+  background: #52C41A;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+  border: none;
+}

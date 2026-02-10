@@ -1,53 +1,82 @@
 <template>
   <div class="cart-page">
-    <van-nav-bar title="购物车" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="购物车" left-arrow @click-left="onClickLeft" fixed placeholder />
     
     <div class="cart-content">
+      <!-- Empty State -->
       <div v-if="cartList.length === 0" class="empty-cart">
-        <van-empty description="购物车空空如也">
-          <van-button round type="success" class="bottom-button" @click="goToMall">
-            去逛逛
-          </van-button>
-        </van-empty>
+        <div class="empty-icon-box">
+          <van-icon name="shopping-cart-o" class="icon" />
+        </div>
+        <p class="empty-text">购物车还是空的</p>
+        <p class="empty-sub">快去挑选心仪的商品吧</p>
+        <van-button round color="linear-gradient(to right, #4CAF50, #81C784)" class="go-btn" @click="goToMall">
+          去逛逛
+        </van-button>
       </div>
       
+      <!-- Cart List -->
       <div v-else class="cart-list">
-        <van-swipe-cell v-for="item in cartList" :key="item.product_id" class="cart-item">
-          <van-checkbox-group v-model="item.checked" @change="onItemCheck">
-            <div class="item-content">
-              <van-checkbox :name="item.checked" shape="square" />
-              <img :src="item.image" :alt="item.product_name" class="product-image" />
-              <div class="product-info">
-                <div class="product-name">{{ item.product_name }}</div>
-                <div class="product-spec">{{ item.specification }}</div>
-                <div class="product-bottom">
-                  <span class="price">¥{{ item.price }}</span>
+        <van-swipe-cell v-for="item in cartList" :key="item.product_id" class="cart-item-wrapper">
+          <div class="cart-item glass">
+            <van-checkbox v-model="item.checked" checked-color="#00c853" @change="onItemCheck" class="item-checkbox" />
+            
+            <div class="item-main">
+              <van-image 
+                :src="item.image || '/images/banners/banner1.jpg'" 
+                class="product-img" 
+                fit="cover"
+                radius="8px"
+              />
+              
+              <div class="info-col">
+                <div class="name ellipsis-2">{{ item.product_name }}</div>
+                <div class="spec-tag" v-if="item.specification">{{ item.specification }}</div>
+                
+                <div class="price-row">
+                  <div class="price">
+                    <span class="symbol">¥</span>
+                    <span class="num">{{ item.price }}</span>
+                  </div>
+                  
                   <van-stepper 
                     v-model="item.quantity" 
                     :min="1" 
-                    :max="item.stock" 
+                    :max="item.stock || 99" 
+                    button-size="22px"
+                    class="custom-stepper"
                     @change="onQuantityChange(item)"
                   />
                 </div>
               </div>
             </div>
-          </van-checkbox-group>
+          </div>
           <template #right>
-            <van-button square text="删除" type="danger" class="delete-button" @click="deleteItem(item)" />
+            <div class="delete-btn-box" @click="deleteItem(item)">
+              <div class="delete-btn">删除</div>
+            </div>
           </template>
         </van-swipe-cell>
       </div>
     </div>
     
-    <div v-if="cartList.length > 0" class="cart-footer">
-      <van-checkbox v-model="selectAll" shape="square" @change="onSelectAll">
+    <!-- Footer Bar -->
+    <div v-if="cartList.length > 0" class="cart-footer glass">
+      <van-checkbox v-model="selectAll" checked-color="#00c853" @change="onSelectAll">
         全选
       </van-checkbox>
+      
       <div class="footer-right">
-        <div class="total-price">
-          合计：<span class="price">¥{{ totalPrice }}</span>
+        <div class="total-info">
+          <span class="label">合计:</span>
+          <span class="price">¥{{ totalPrice }}</span>
         </div>
-        <van-button type="success" round @click="goToCheckout">
+        <van-button 
+          round 
+          color="linear-gradient(to right, #4CAF50, #2E7D32)" 
+          class="checkout-btn"
+          @click="goToCheckout"
+        >
           结算({{ checkedCount }})
         </van-button>
       </div>
@@ -139,110 +168,180 @@ onMounted(() => {
 <style scoped lang="scss">
 .cart-page {
   min-height: 100vh;
-  background-color: #f5f5f5;
-  padding-bottom: 100px;
+  background-color: #f7f8fa;
+  padding-bottom: 120px;
 }
 
 .cart-content {
-  padding-top: 46px;
+  padding: 12px;
 }
 
 .empty-cart {
-  padding: 60px 20px;
-
-  .bottom-button {
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+  
+  .empty-icon-box {
+    width: 100px;
+    height: 100px;
+    background: #e8f5e9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    
+    .icon {
+      font-size: 50px;
+      color: #4CAF50;
+    }
+  }
+  
+  .empty-text {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    margin: 0 0 8px;
+  }
+  
+  .empty-sub {
+    font-size: 14px;
+    color: #999;
+    margin: 0 0 24px;
+  }
+  
+  .go-btn {
+    width: 160px;
+    height: 40px;
   }
 }
 
-.cart-list {
-  padding: 10px;
+.cart-item-wrapper {
+  margin-bottom: 12px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .cart-item {
-  margin-bottom: 10px;
-  border-radius: 8px;
-  overflow: hidden;
-
-  .item-content {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    background-color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: #fff;
+  border-radius: 12px;
+  
+  .item-checkbox {
+    margin-right: 12px;
   }
-
-  .product-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 4px;
-    margin: 0 10px;
-    object-fit: cover;
-  }
-
-  .product-info {
+  
+  .item-main {
     flex: 1;
-    min-width: 0;
-
-    .product-name {
-      font-size: 14px;
-      color: #333;
-      margin-bottom: 4px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    display: flex;
+    
+    .product-img {
+      width: 88px;
+      height: 88px;
+      flex-shrink: 0;
+      background: #f5f5f5;
     }
-
-    .product-spec {
-      font-size: 12px;
-      color: #999;
-      margin-bottom: 8px;
-    }
-
-    .product-bottom {
+    
+    .info-col {
+      flex: 1;
+      margin-left: 12px;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: center;
-
-      .price {
-        font-size: 16px;
-        color: #ff4444;
-        font-weight: bold;
+      
+      .name {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.4;
+        font-weight: 500;
+      }
+      
+      .spec-tag {
+        align-self: flex-start;
+        font-size: 10px;
+        color: #666;
+        background: #f5f5f5;
+        padding: 2px 6px;
+        border-radius: 4px;
+        margin-top: 4px;
+      }
+      
+      .price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: 8px;
+        
+        .price {
+          color: #ff3d00;
+          font-weight: bold;
+          
+          .symbol {
+            font-size: 12px;
+          }
+          .num {
+            font-size: 16px;
+          }
+        }
       }
     }
   }
+}
 
-  .delete-button {
-    height: 100%;
+.delete-btn-box {
+  height: 100%;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ff4444;
+  color: white;
+  
+  .delete-btn {
+    font-size: 14px;
   }
 }
 
 .cart-footer {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 50px; /* Above Tabbar */
+  left: 12px;
+  right: 12px;
+  border-radius: 50px;
+  height: 56px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
-  background-color: #fff;
-  border-top: 1px solid #eee;
-  z-index: 100;
-
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+  
   .footer-right {
     display: flex;
     align-items: center;
     gap: 12px;
-
-    .total-price {
-      font-size: 14px;
-      color: #333;
-
+    
+    .total-info {
+      .label {
+        font-size: 12px;
+        color: #666;
+        margin-right: 4px;
+      }
       .price {
         font-size: 18px;
-        color: #ff4444;
+        color: #ff3d00;
         font-weight: bold;
       }
+    }
+    
+    .checkout-btn {
+      height: 36px;
+      padding: 0 20px;
+      font-size: 14px;
     }
   }
 }

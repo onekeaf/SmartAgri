@@ -1,0 +1,10 @@
+<view class="container">
+  <view class="title">扫码支付完成订阅</view>
+  <view class="tip">请扫码支付，支付完成后点击下方按钮激活</view>
+  <!-- 使用 assets 里的图片，如果不存在则显示占位 -->
+  <view class="code-container">
+    <image src="/assets/icons/pay.jpg" class="code-img" mode="aspectFit" show-menu-by-longpress="{{true}}"></image>
+    <view class="placeholder-text">（模拟支付二维码）</view>
+  </view>
+  <button class="btn" bindtap="goToSuccess">我已完成支付，激活权限</button>
+</view>

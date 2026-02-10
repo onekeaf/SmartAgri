@@ -113,13 +113,12 @@ Page({
         icon: 'success',
         duration: 2000,
         success: () => {
-          // 2秒后跳转到首页
+          // 2秒后跳转到订阅套餐页
           setTimeout(() => {
-            console.log('准备跳转到首页');
-            wx.switchTab({
-              url: '/pages/index/index',
-              success: () => console.log('跳转成功'),
-              fail: (err) => console.error('跳转失败:', err)
+            wx.navigateTo({
+              url: '/pages/subscription/package/package',
+              success: () => console.log('打开订阅页成功'),
+              fail: (err) => console.error('打开订阅页失败:', err)
             });
           }, 2000);
         }

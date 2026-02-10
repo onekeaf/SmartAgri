@@ -1,0 +1,6 @@
+<view class="container">
+  <view class="icon">✓</view>
+  <view class="title">订阅成功！</view>
+  <view class="desc">您的账号已解锁全部功能，返回系统即可使用</view>
+  <button class="btn" bindtap="goHome">订阅成功，进入系统主页</button>
+</view>

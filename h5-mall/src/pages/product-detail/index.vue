@@ -126,7 +126,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { showToast } from 'vant';
-import { getProducts } from '@/utils/storage';
+import { getProducts, getUser } from '@/utils/storage';
 
 const router = useRouter();
 const route = useRoute();
@@ -176,8 +176,8 @@ const loadCartCount = () => {
 };
 
 const checkLogin = () => {
-  const token = localStorage.getItem('mall_token');
-  if (!token) {
+  const user = getUser();
+  if (!user) {
     showToast('请先登录');
     router.push('/login');
     return false;
